@@ -1,9 +1,11 @@
 # Calcolo della durata di un corso in giorni e ore #
+
 # Dati di input #
-nome = "Maximo"
-corso = "Data Science"
-durata_settimane = 10
-giorni_effetive = 5
+nome = input("Scrivi il tuo nome: ")
+corso = input("Scrivi il nome del corso: ")
+durata_settimane = int(input("Scrivi la durata del corso in settimane: "))
+giorni_effetive = int(input("Scrivi il numero di giorni effettivi a settimana: "))
+
 # Calcolo della durata del corso #
 durata_giorni = durata_settimane * giorni_effetive
 ore_di_corso = 8
