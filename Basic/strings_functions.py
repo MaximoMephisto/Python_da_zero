@@ -23,3 +23,13 @@ print(iter_text)
 line = "-"
 a = line.join(str)
 print(a)
+
+# Big string
+saluto = "Ciao Python"
+
+big_string = saluto.upper()
+print(big_string)
+
+# Little string
+little_string = saluto.lower()
+print(little_string)
