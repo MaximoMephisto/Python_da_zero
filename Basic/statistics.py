@@ -3,6 +3,8 @@
 # divided by the total number of numbers to find the mean
 numbers = [10, 20, 30, 40, 50]
 mean = sum(numbers) / len(numbers)
+print(sum(numbers))
+print(len(numbers))
 print(f"Mean: {mean}")
 
 # Median: The middle value in a sorted list of numbers.
