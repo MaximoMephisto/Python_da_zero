@@ -1,9 +1,22 @@
 # Input ore, minuti e secondi
-ore = int(input("Scrivi il numero di ore: "))
-minuti = int(input("Scrivi il numero di minuti: "))
-secondi = int(input("Scrivi il numero di secondi: "))
+
+#ore = int(input("Scrivi il numero di ore: "))
+#minuti = int(input("Scrivi il numero di minuti: "))
+#secondi = int(input("Scrivi il numero di secondi: "))
+
 # Calcolare il tempo totale in secondi
 # 1 ora = 3600 secondi, 1 minuto = 60 secondi    
-tempo_totale_secondi = ore * 3600 + minuti * 60 + secondi
+
+#tempo_totale_secondi = ore * 3600 + minuti * 60 + secondi
+
+ore, minuti, secondi = input("Inserisci orario (h:m:s): ").split(":") # split() trasforma uno string in una lista
+
+result = int(ore) * 3600 + int(minuti) * 60 + int(secondi)
+
+print(f"{ore}h : {minuti}m : {secondi}s = {result}")
+
 # Output
-print(f"{ore} ore, {minuti} minuti e {secondi} secondi sono {tempo_totale_secondi} secondi.")
+#print(f"{ore} ore, {minuti} minuti e {secondi} secondi sono {tempo_totale_secondi} secondi.")
+
+
+
