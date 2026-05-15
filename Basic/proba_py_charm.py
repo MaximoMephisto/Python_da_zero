@@ -1,1 +1,2 @@
-# Questo è una prova
+#
+print("Questo è una prova")
