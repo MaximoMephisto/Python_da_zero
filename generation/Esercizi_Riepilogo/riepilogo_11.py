@@ -25,4 +25,5 @@ if num % 10 == 0 and num < 100:
 # e 5 allora è NERO.
 if num == math.factorial(1) or num == math.factorial(2) or num == math.factorial(3) or num == math.factorial(4) or num == math.factorial(5):
     print(f"Il numero {num} è di colore NERO")
+    
 # I numeri 3,4,5 e poi 9,10,11 e poi 15,16,17 (e così via, cioè i primi 3 numeri ogni 6 partendo da 3) sono BIANCHI.

@@ -15,7 +15,7 @@ if ((n // 3) - 3) % 2 == 0:
 ## 2, 4, 6, 8, 10, 12, 14, 16, 18
 
 # Trovate** almeno 9 differenti numeri VIOLA
-## 4, 6, 8, 10, 12, 14, 16, 18, 20
+## 4, 5, 8, 9, 12, 13, 16, 17, 20
 
 # Scrivete i 27 numeri che avete trovato all’interno di un commento.
 ## 5, 7, 9, 11, 13, 15, 17, 19, 21
