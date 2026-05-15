@@ -1,4 +1,4 @@
-n = 15
+n = 8
 if n < 8:
     print("The number is less than 8")
 elif n > 8:
@@ -8,7 +8,7 @@ elif n > 8:
 ## "The number is greater than 8"
 
 # è possibile assegnare n in modo che vengano fatte entrambe le stampe?
-## No, solo cambiando il codice if n <= 8, elif >= 8 e n = 8
+## No, solo cambiando il codice if n <= 8, if >= 8 e n = 8
 
 # è possibile assegnare n in modo che nessuna stampa venga eseguita?
 ## Si, n = 8
