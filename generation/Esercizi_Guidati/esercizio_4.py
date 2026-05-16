@@ -1,4 +1,5 @@
 n = int(input("Insert a number:"))
+
 if n < 8 or n > 20:
     print("The number is RED")
 elif n>10:

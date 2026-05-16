@@ -1,4 +1,6 @@
+
 n = 15
+
 if n < 8:
     print("The number is less than 8")
 if n > 5:

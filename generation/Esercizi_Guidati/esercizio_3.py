@@ -1,4 +1,5 @@
 n = 8
+
 if n < 8:
     print("The number is less than 8")
 elif n > 8:
