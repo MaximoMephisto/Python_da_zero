@@ -4,6 +4,13 @@ print("=================================")
 
 nome_cliente = input("Inserisci il tuo nome: ")
 
+print("0) Noleggio di bassa stagione.")
+print("1) Noleggio di alta stagione.")
+stagione = int(input("Inserisci il periodo di noleggio (Es. 0): "))
+if stagione < 0 or stagione > 1:
+    print("Error. Scegliere opzione giusta.")
+    exit()
+
 print("1) Bicicletta di città.")
 print("2) Mountain Bike.")
 print("3) Bicicletta elettrica.")
@@ -46,6 +53,7 @@ if opt_1.lower() == "s" or opt_1.lower == "si":
         accessori = caschi * 2
 elif opt_1.lower() == "n" or opt_1.lower == "no":
     caschi = 0
+    accessori = 0
 else :
     print("Errore, caratteri non accetatti.")
 
@@ -55,11 +63,16 @@ print("= Noleggio Bici =")
 print(f"Tipo: {nome_bici}")
 print(f"Tempo di noleggio: {ore}:{minuti}h")
 print(f"Accesori aggiunti: {caschi}")
-print(f"Prezzo totale del noleggio: {round(tot_noleggio, 2)}£")
-
-# Chiede all'utente se il noleggio avviene in alta stagione, indicato con 1 per sì e 0 per no.
-# Se il noleggio avviene in alta stagione, il prezzo viene aumentato del 30%.
-# Se la durata del noleggio è superiore a 8 ore, viene applicato uno sconto del 15% sul totale (calcolato dopo 
-# l'eventuale maggiorazione stagionale).
-# Se la durata del noleggio è inferiore a 2 ore, viene applicato un supplemento fisso di 4 € per la gestione della 
-# pratica.
+if stagione == 1:
+    percentuale = (round(tot_noleggio) / 100) * 30
+    tot_noleggio = tot_noleggio + percentuale
+    print("Aumento del 30% per alta stagione.")
+if tot_orario > 8:
+    percentuale = (round(tot_noleggio) / 100) * 15
+    tot_noleggio = tot_noleggio - percentuale
+    print("Sconto applicato del 15% per durata del noleggio.")
+if tot_orario < 2:
+    supplemento = 4
+    tot_noleggio = tot_noleggio + supplemento
+    print("4£ di supplemento fisso per gestione e durata del noleggio..")
+print(f"Prezzo totale del noleggio: {round(tot_noleggio, 2)}£") 
