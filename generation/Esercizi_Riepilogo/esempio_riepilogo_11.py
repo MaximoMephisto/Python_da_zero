@@ -2,7 +2,9 @@
 # ogni 8 SALTANDO 8 
 # partendo da 4
 
-# Come nel riepilogo originale:
-num = int(input("Numero: "))
-if num >= 4 and (num - 4) % 12 <= 3: # % 12 per non prendere anche i numeri giusti e fare un vero salto di 8, altrimenti se fosse % 8 prenderebbe anche i numeri giusti e sembra un salto a 4.
-    print("Numero giusto.")
+# Come nel riepilogo originale:   
+num = int(input("Numero: "))  
+while num < 30:
+    if num >= 4 and (num - 4) % 12 <= 3: # % 12 per non prendere anche i numeri giusti e fare un vero salto di 8, altrimenti se fosse % 8 prenderebbe anche i numeri giusti e sembra un salto a 4.
+        print(f"Numero giusto. {num}")
+        num += 1
