@@ -19,7 +19,6 @@ else:
     opt = int(input("Sceglie una opzione (Es. 2): "))
     if opt <= 0 or opt > 3:
         print("Error. Scegliere una opzione giusta.")
-        exit()
     elif opt == 1:
         nome_bici = "Bicicletta di città"
         prezzo_bici = 3
