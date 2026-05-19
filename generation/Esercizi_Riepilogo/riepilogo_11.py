@@ -27,7 +27,6 @@ if num == math.factorial(1) or num == math.factorial(2) or num == math.factorial
     print(f"Il numero {num} è di colore NERO")
     
 # I numeri 3,4,5 e poi 9,10,11 e poi 15,16,17 (e così via, cioè i primi 3 numeri ogni 6 partendo da 3) sono BIANCHI.
-
 # Dobbiamo partire da 3, peró il computer naturalmente parte da zero,
 # quindi per trovare la sottrazione dobbiamo prendere il inizio del computer
 # e il nostro inizio:
@@ -37,13 +36,7 @@ if num == math.factorial(1) or num == math.factorial(2) or num == math.factorial
 # 0 - 3 = -3
 # sottrazione -3, quindi dobbiamo portare indietro il num da 3 per
 # combaciarlo a lo zero del computer
-
 # Al avere un ritmo FISSO di "6" usiamo il modullo di questo numero. Quindi % 6
 if num >= 3 and (num - 3) % 6 <= 2:
     print(f"Il numero {num} è di colore BIANCO")
-
-paso_1 = num -3
-print(paso_1)
-paso_2 = paso_1 % 6
-print(paso_2)
 

@@ -4,7 +4,9 @@
 num = int(input("Scrivi un numero: "))
 num_pare = num % 2
 
-if num_pare == 0 and num > 0:
+if num == 0:
+    print("Il numero è un neutro pari.")
+elif num_pare == 0 and num > 0:
     print("Il numero è pari positivo")
 elif num_pare == 0 and num < 0:
     print("Il numero è pare negativo")

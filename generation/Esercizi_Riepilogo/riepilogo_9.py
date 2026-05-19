@@ -18,7 +18,7 @@ if minuti >= 0 and minuti <= 59:
     print("Minuti corretti.")
 else: 
     print("Errore. Minuti sbagliati")
-    exit()
+    exit() # Non consigliato
 
 # Calcola e stampa il numero di minuti che sono passati dalla mezzanotte, ma solo nel
 # caso in cui i dati siano corretti.

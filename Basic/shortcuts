@@ -1,0 +1,25 @@
+Ctrl C per coppiare
+Ctrl V per collare
+Ctrl X per tagliare
+Ctrl / per commentare dentro il codice
+Ctrl P per cercare un archivio
+Ctrl F per cercare un texto dentro l'archivio particolare
+Ctrl shift F per cercare dentro di tutto il project
+Tab per aggiungere spazio di 4
+Shift tab per togliere spazio di 4
+Ctrl n per creare nuovo archivio
+Ctrl enter per creare una nuova linea di codice
+Ctrl <- per saltare tra parole a sinistra
+Ctrl -> per saltare tra parole a destra
+Shift <- per selezionare a sinistra
+Shift -> per selezionare a destra
+Ctrl shift <- per selezionare tra parole a sinistra
+Ctrl shift -> per selezionare tra parole a destra
+Alt shift (Freccia su) per cambiare di posizione una riga a sopra
+Alt shift (Freccia giu) per cambiare di posizione una riga a sotto
+Ctrl s per salvare archivio aperto
+Ctrl a selezionare tutto il contenuto del archivio
+Ctrl z per ritornare indietro
+Ctrl shift z per rifare quello che abbiamo fatto tornare indietro (possiamo anche fare Ctrl y)
+
+
