@@ -72,6 +72,8 @@ else:
                     percentuale = (round(tot_noleggio) / 100) * 15
                     tot_noleggio = tot_noleggio - percentuale
                     print("Sconto applicato del 15% per durata del noleggio.")
+                if tot_orario > 6 and opt == 3:
+                    print("VERIFICARE LA CARICA DELLA BATTERIA")
                 if tot_orario < 2:
                     supplemento = 4
                     tot_noleggio = tot_noleggio + supplemento
