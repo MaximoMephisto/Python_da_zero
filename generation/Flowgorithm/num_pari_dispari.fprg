@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="num_pari_dispari"/>
+        <attribute name="authors" value="maxxi"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-20 04:43:10 "/>
+        <attribute name="created" value="bWF4eGk7QlJBSU5fUEM7MjAyNi0wNS0yMDsiMDM6MzI6MjcgIjsyMzQ2"/>
+        <attribute name="edited" value="bWF4eGk7QlJBSU5fUEM7MjAyNi0wNS0yMDsiMDQ6NDM6MTAgIjsxOzI0NDk="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="num1, numRiserva, numPositivi, numNegativi, numPari, numDispari" type="Integer" array="False" size=""/>
+            <output expression="&quot;Inserisci un numero:&quot;" newline="True"/>
+            <input variable="num1"/>
+            <assign variable="numRiserva" expression="0"/>
+            <assign variable="numPositivi" expression="0"/>
+            <assign variable="numNegativi" expression="0"/>
+            <assign variable="numPari" expression="0"/>
+            <assign variable="numDispari" expression="0"/>
+            <while expression="num1 != -1">
+                <if expression="num1 &gt; 0">
+                    <then>
+                        <assign variable="numPositivi" expression="numPositivi + 1"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="num1 &lt; -1">
+                    <then>
+                        <assign variable="numNegativi" expression="numNegativi + 1"/>
+                    </then>
+                    <else/>
+                </if>
+                <if expression="num1 &lt; 0">
+                    <then>
+                        <assign variable="num1" expression="num1*-1"/>
+                        <if expression="num1 % 2 == 0">
+                            <then>
+                                <assign variable="numPari" expression="numPari + 1"/>
+                            </then>
+                            <else/>
+                        </if>
+                        <if expression="num1 % 2 != 0">
+                            <then>
+                                <assign variable="numDispari" expression="numDispari + 1"/>
+                            </then>
+                            <else/>
+                        </if>
+                    </then>
+                    <else/>
+                </if>
+                <output expression="&quot;Inserisci numero:&quot;" newline="True"/>
+                <input variable="num1"/>
+            </while>
+            <output expression="&quot;Qta numeri positivi:&quot;&amp; numPositivi" newline="True"/>
+            <output expression="&quot;Qta numeri negativi:&quot;&amp; numNegativi" newline="True"/>
+            <output expression="&quot;Qta numeri pari:&quot;&amp; numPari" newline="True"/>
+            <output expression="&quot;Qta numeri dispari:&quot;&amp; numDispari" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

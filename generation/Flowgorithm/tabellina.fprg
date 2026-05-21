@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="tabellina"/>
+        <attribute name="authors" value="maxxi"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-05-20 03:26:49 "/>
+        <attribute name="created" value="bWF4eGk7QlJBSU5fUEM7MjAyNi0wNS0yMDsiMDI6NDc6MDQgIjsyMzQ2"/>
+        <attribute name="edited" value="bWF4eGk7QlJBSU5fUEM7MjAyNi0wNS0yMDsiMDM6MjY6NDkgIjsyOzI0NjI="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="tabellina, inizio, stop" type="Integer" array="False" size=""/>
+            <output expression="&quot;Qualle tabellina vuoi:&quot;" newline="True"/>
+            <input variable="tabellina"/>
+            <output expression="&quot;Da dove vuoi iniziare?&quot;" newline="True"/>
+            <input variable="inizio"/>
+            <while expression="inizio &lt;= 0">
+                <output expression="&quot;Errore, l'inizio deve essere maggiore a 0. Dove vuoi iniziare?&quot;" newline="True"/>
+                <input variable="inizio"/>
+            </while>
+            <output expression="&quot;Dove ti vuoi fermare?&quot;" newline="True"/>
+            <input variable="stop"/>
+            <while expression="stop &lt;= 0">
+                <output expression="&quot;Errore. la fine deve essere maggiore a 0. Dove ti vuoi fermare?&quot;" newline="True"/>
+                <input variable="stop"/>
+            </while>
+            <if expression="inizio &lt; stop">
+                <then>
+                    <while expression="inizio &lt;= stop">
+                        <output expression="inizio &amp; &quot;x&quot; &amp; tabellina &amp; &quot;=&quot; &amp; inizio*tabellina" newline="True"/>
+                        <assign variable="inizio" expression="inizio + 1"/>
+                    </while>
+                </then>
+                <else>
+                    <output expression="&quot;Errore, la fine deve essere maggiore all'inizio&quot;" newline="True"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
