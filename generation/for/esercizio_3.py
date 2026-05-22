@@ -2,8 +2,14 @@
 fine = 7
 somma = 0
 for i in range(fine):
-    num = int(input("Inserisci numero: "))
+    if i == fine-1:
+        num = int(input(f"Inserisci ultimo numero: "))
+    elif i == 0:
+        num = int(input(f"Inserisci primo numero: "))
+    else:
+        num = int(input(f"Inserisci numero {i+1}: "))
+    
     somma = somma + num
-media = somma / fine
+media = round(somma / fine, 2)
 print(media)
     
