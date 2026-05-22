@@ -2,10 +2,11 @@
 # risultati è maggiore di 35 dice che il risultato è sopra la media.
 import random
 
-facce = random.randint(1, 6)
 faccia = 0
 for i in range(10):
+    facce = random.randint(1, 6)
     faccia += facce
+    print(facce)
 if faccia > 35:
     print(f"Il risultato {faccia} è sopra la media.")
 else:
