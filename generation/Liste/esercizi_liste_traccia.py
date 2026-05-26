@@ -31,8 +31,18 @@ print(f"Ci sono {pari} pari e {dispari} dispari.")
 
 # Esercizio 5 — Massimo e minimo senza max() e min()
 n = [42, 7, 19, 88, 3, 55, 21, 64]
-print(max(n))
-print(min(n))
+
+n_max = n[0]
+n_min = n[0]
+
+for elem in n:
+    if elem > n_max:
+        n_max = elem
+    if elem < n_min:
+        n_min = elem
+        
+print(n_max)
+print(n_min)
 
 # Esercizio 6 — Conta le occorrenze (senza .count())
 lettere = ['a', 'b', 'a', 'c', 'd', 'a', 'b', 'a']
