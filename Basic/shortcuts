@@ -2,6 +2,8 @@ Ctrl C per coppiare
 Ctrl V per collare
 Ctrl X per tagliare
 Ctrl / per commentare dentro il codice
+Ctrl k + Ctrl C per commentare diverse linee
+Ctrl k + Ctrl u per togliere commento
 Ctrl P per cercare un archivio
 Ctrl F per cercare un texto dentro l'archivio particolare
 Ctrl shift F per cercare dentro di tutto il project
