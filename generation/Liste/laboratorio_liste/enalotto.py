@@ -57,13 +57,13 @@ perc_quaterno = (quaterno / ripetizioni_schede) * 100
 perc_cinquina = (cinquina / ripetizioni_schede) * 100
 perc_sei = (sei / ripetizioni_schede) * 100
 
-probabilita_zero = 0.5588 
-probabilita_uno = 0.3795
-probabilita_ambo = 0.02985
-probabilita_terno = 0.002747
-probabilita_quaterno = 0.0000958
-probabilita_cinquina = 0.00000135
-probabilita_sei = 0.00000000161
+probabilita_zero = 0.5588 * 100
+probabilita_uno = 0.3795 * 100
+probabilita_ambo = 0.02985 * 100
+probabilita_terno = 0.002747 * 100
+probabilita_quaterno = 0.0000958 * 100
+probabilita_cinquina = 0.00000135 * 100
+probabilita_sei = 0.00000000161 * 100
 
 print("\n ======= \n")
 print(f"Schedina: {schedina}")
