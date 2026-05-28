@@ -9,6 +9,8 @@ schedina = []
 storico = []
 estrazioni = []
 
+liste_schede = []
+
 zero = uno = ambo = terno = quaterno = cinquina = sei = 0   # Tutte le variabile sono uguale a zero
 
 # Se la schedina ha meno di 6 dati, gli inserisci verificando che non si ripetono
@@ -32,6 +34,8 @@ for i in tqdm(range(ripetizioni_schede)):
         if numeri_enalotto not in super_enalotto:
             super_enalotto.append(numeri_enalotto)
             estrazioni.append(numeri_enalotto)
+    
+    liste_schede.append(super_enalotto)
             
     # Se qualcuno degli elementi in schedina si trova anche dentro il super
     # enalotto, somma un punto
@@ -145,28 +149,43 @@ else:
 
 print("\n ======= \n")
 
-# Facciamo un ciclo che percorre tutti gli elementi estratti dalle schedine giocate
+# Nuova maniera di prendere le schede fatte
 cont = 0
-for elem in tqdm(estrazioni):
-    
-    storico.append(elem) # Gli inseriamo nello storico
-    
-    # Con cont prendiamo la posizione per separare ogni giocata (composta da sei numeri) 
-    if cont == 7:
-        storico.append("Numeri giocati: ")
-        cont = 0
+giorno = 0
+for elem in liste_schede:
+    giorno += 1
+    print(f"Schede giocate il giorno {giorno}: {liste_schede[cont]}")
     cont += 1
+    
+# Trovare num 3
+num_3 = 0
+cont = 0
+for elem in liste_schede:
+    if 3 in liste_schede[cont]:
+        num_3 += 1
+    cont += 1
+print(f"Il numero 3 è uscito: {num_3} volte.")
+
+# # # Facciamo un ciclo che percorre tutti gli elementi estratti dalle schedine giocate
+# # # for elem in tqdm(estrazioni):
+    
+# # #     storico.append(elem) # Gli inseriamo nello storico
+    
+# # #     # Con cont prendiamo la posizione per separare ogni giocata (composta da sei numeri) 
+# # #     if cont == 7:
+# # #         storico.append("Numeri giocati: ")
+# # #         cont = 0
+# # #     cont += 1
         
 # Per avere una stampa piu visibile gli definiamo un end agli elementi dentro la lista 
 # storico per poi ogni 8 elementi fare un salto linea
 cont = 0
-for elem in tqdm(storico):
+for elem in storico:
     print(elem, end=" ")
     cont += 1
     
     if cont % 8 == 0: # Salto linea (riepilogo_11)
         print("\n")
-
 
 num_piu_estrato = qta_estrato = num_meno_estrato = fortunati = sfortunati = 0   # Tutti valgono 0
 # Definiamo questo valore MOLTO alto per essere sicuri di prenderne un numero piu 
@@ -176,7 +195,7 @@ qta_meno_estrato = 1_000_000
 num_fortunati = []
 num_sfortunati = []
 
-for elem in estrazioni: # Percorre gli elementi estrati
+for elem in tqdm(estrazioni): # Percorre gli elementi estrati
     
     cont = 0
     # Per tutti i numeri estrati, se questi si ripetono aumenta il conto del numero ripetuto
@@ -194,7 +213,7 @@ for elem in estrazioni: # Percorre gli elementi estrati
         num_meno_estrato = elem
 
 # range(5) perche vogliamo soltanto prendere i 5 numeri piu fortunati (quelli piu usciti)
-for i in range(5):
+for i in tqdm(range(5)):
     # Posizione -1 per prendere anche il valore della posizione 0
     qta_estrato = -1
     num_piu_estrato = -1
@@ -248,36 +267,48 @@ print(f"\n I numeri meno fortunati sono: {num_sfortunati}")
 print("\n ======= \n")
 
 qta_uscite = []
-num_presi = []
+### num_presi = []
 cont = 0
 
-# Percorre tutti gli elementi estrati
-for elem in tqdm(estrazioni):
-    # Se non si trovano dentro la lista di tutti i numeri presi
-    if elem not in num_presi:
+conteggio = [0] * 90
+for lista in liste_schede:
+    for num in lista:
+        conteggio[num -1] += 1
+        print(lista)   
+           
+print(conteggio)
+
+###
+# Possiamo uttilizzare count()
+###
+
+# # # # Percorre tutti gli elementi estrati
+# # # for elem in tqdm(estrazioni):
+# # #     # Se non si trovano dentro la lista di tutti i numeri presi
+# # #     if elem not in num_presi:
         
-        num_presi.append(elem)  # Gli inseriamo
-        cont = 0
+# # #         num_presi.append(elem)  # Gli inseriamo
+# # #         cont = 0
         
-        # Si contano le ripetizione dei numeri
-        for num in estrazioni:
-            if elem == num:
-                cont += 1    
+# # #         # Si contano le ripetizione dei numeri
+# # #         for num in estrazioni:
+# # #             if elem == num:
+# # #                 cont += 1    
         
-        # Inseriamo i dati del numero e quante volte è uscito soltanto se
-        # non abbiamo gia controlato il numero prima
-        qta_uscite.append("Numero: ")
-        qta_uscite.append(elem)
-        qta_uscite.append("Qta. uscito: ")
-        qta_uscite.append(cont)
+# # #         # Inseriamo i dati del numero e quante volte è uscito soltanto se
+# # #         # non abbiamo gia controlato il numero prima
+# # #         qta_uscite.append("Numero: ")
+# # #         qta_uscite.append(elem)
+# # #         qta_uscite.append("Qta. uscito: ")
+# # #         qta_uscite.append(cont)
 
 # Stampa gli elementi usciti con la quantita di volte che è uscito
-cont = 0
-for elem in qta_uscite:
-    print(elem, end=" ")
-    cont += 1
-    if cont % 4 == 0:
-        print("\n")
+# # # cont = 0
+# # # for elem in qta_uscite:
+# # #     print(elem, end=" ")
+# # #     cont += 1
+# # #     if cont % 4 == 0:
+# # #         print("\n")
 
 # Graffico con le percentuali delle uscite
 categorie = ['0', '1', 'Ambo', 'Terno', 'Quaterno', 'Cinquina', 'Sei']

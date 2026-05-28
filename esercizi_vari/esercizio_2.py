@@ -1,24 +1,18 @@
-import random
+# Escribe un programa que muestre por consola (con un print) los
+# números de 1 a 100 (ambos incluidos y con un salto de línea entre
+# cada impresión), sustituyendo los siguientes:
+# Múltiplos de 3 por la palabra "fizz".
+# Múltiplos de 5 por la palabra "buzz".
+# Múltiplos de 3 y de 5 a la vez por la palabra "fizzbuzz".
 
-carte = []
-scartate = []
-
-for i in range(1, 8+1):
-    carta = i
-    carte.append(carta)
-    if i == carta:
-        carte.append(carta)
-
-while True:
-    posizione_uno = random.randint(1, 8)
-    posizione_due = random.randint(1, 8)
+for i in range(1, 100+1):
     
-    if (posizione_uno not in scartate or posizione_due not in scartate) and (posizione_uno == posizione_due):
-        print("Coppie trovate!")
-        scartate.append(posizione_uno)
-        scartate.append(posizione_due)
-    else:
-        break
-
-print(scartate)
+    if (i % 3 == 0) and (i % 5 == 0):
+        i = "fizzbuzz"
+    elif i % 3 == 0 and i % 5 != 0:
+        i = "fizz"
+    elif i % 5 == 0 and i % 3 != 0:
+        i = "buzz"
+        
+    print(i, end="\n")
     
