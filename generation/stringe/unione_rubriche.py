@@ -30,13 +30,14 @@ for nomi in norm:
 
 iniziali_punto = []
 lettera_iniziali = lettera_iniziali.split()
+
 for lettere in lettera_iniziali:
     lettere = lettere.split()
     for lettera in lettere:
         lettera = list(lettera)
         lettera ='.'.join(lettera)
     iniziali_punto.append(lettera)
-print(iniziali_punto)    
+# print(iniziali_punto)    
 
 iniziali = []
 
@@ -49,14 +50,12 @@ for nomi in norm:
     iniziali.append(list_nome_iniziali)
 print(iniziali)
 
-# Genera un indice per lettera come lista di stringhe (niente dizionari), ad es.:
-# ["B: Bianchi, Marco", "D: De Luca, Carlo", "N: Neri, Paola", "R: Rossi, Anna"].
-
-indice_lettera = []
-lettera_iniziali = ""
+lettera_nome = []
 for nomi in norm:
-    nomi = nomi.split()
-    for lettera in nomi:
-        lettera_iniziali = lettera_iniziali + lettera[0]
-        print(lettera_iniziali)
-        
+    lettera_iniziale = ""
+    lettera_iniziale += nomi[0] + ": " + nomi
+    lettera_nome.append(lettera_iniziale)
+
+print(lettera_nome)
+
+
