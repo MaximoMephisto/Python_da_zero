@@ -99,3 +99,19 @@ for libro in libri_non_duplicati:
     print(libro)
 
 # Statistiche sulle stringhe
+titoli_non_duplicati = []
+for titolo in titoli:
+    if titolo not in titoli_non_duplicati:
+        titoli_non_duplicati.append(titolo)
+
+lunghezza_lista = len(titoli_non_duplicati)
+somma = 0
+
+for titolo in titoli_non_duplicati:
+    somma += len(titolo)
+
+media = somma / lunghezza_lista
+print(f"lunghezza media titoli: {media}")
+
+for titolo in titoli_non_duplicati:
+    
