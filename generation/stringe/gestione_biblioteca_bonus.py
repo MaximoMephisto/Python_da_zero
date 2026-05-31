@@ -1,5 +1,25 @@
-dati_grezzi = " Il nome della rosa;Umberto Eco;1980;disponibile |1984;George Orwell;1949;prestato| La coscienza di Zeno ;italo svevo;1923;DISPONIBILE|Il deserto dei tartari;Dino Buzzati;1940;prestato |1984;George Orwell;1949;prestato"
+#dati_grezzi = " Il nome della rosa;Umberto Eco;1980;disponibile |1984;George Orwell;1949;prestato| La coscienza di Zeno ;italo svevo;1923;DISPONIBILE|Il deserto dei tartari;Dino Buzzati;1940;prestato |1984;George Orwell;1949;prestato"
+sequenza = 1
+while sequenza == 1:
+    dati_grezzi = input("Inserisci libro (titolo;autore;anno;stato): ")
+    
+    dati_grezzi = dati_grezzi.lower()
+    verifica_dati = dati_grezzi.split(';')
+    
+    if len(verifica_dati) != 4:
+        print("Errore, ci devono essere 4 dati inseriti.")
+        continue
 
+    if not verifica_dati[2].isdigit():
+        print("Errore, l'anno deve essere un numero.")
+        continue
+
+    if verifica_dati[3] != "disponibile" and verifica_dati[3] != "prestato":
+        print("Errore, inserire uno stato valido.")
+        continue
+    
+    sequenza = 0     
+        
 # Pulizia
 dati_grezzi = dati_grezzi.strip().replace("|", ",\n")
 dati_grezzi = dati_grezzi.split(',\n')
