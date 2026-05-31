@@ -77,7 +77,25 @@ for libro in libri:
                 break
 
 # Duplicati e integrità
+libri_non_duplicati = []
+autore_duplicato = ""
+titolo_duplicato = ""
 
-# Nei dati c'è un libro duplicato (il '1984' compare due volte). Costruisci una nuova
-# lista senza duplicati, dove due libri sono duplicati se hanno stesso titolo e stesso autore. Se
-# le due copie hanno stato diverso, tieni quella disponibile.
+for autore in autori:
+    if autori.count(autore) > 1:
+        autore_duplicato = autore
+for titolo in titoli:
+    if titoli.count(titolo) > 1:
+        titolo_duplicato = titolo
+
+print(f"Libro duplicato: {titolo_duplicato} di {autore_duplicato}")
+        
+for libro in libri:
+    if libro not in libri_non_duplicati:
+        libri_non_duplicati.append(libro)
+print("Nessun duplicato presente")
+
+for libro in libri_non_duplicati:
+    print(libro)
+
+# Statistiche sulle stringhe
