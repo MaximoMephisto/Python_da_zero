@@ -113,5 +113,62 @@ for titolo in titoli_non_duplicati:
 media = somma / lunghezza_lista
 print(f"lunghezza media titoli: {media}")
 
+titolo_piu_lungo = ""
+lunghezza_titolo = 0
+for titolo in titoli_non_duplicati:
+    if len(titolo) > len(titolo_piu_lungo):
+        titolo_piu_lungo = titolo
+        lunghezza_titolo = len(titolo)
+print(f"Piu lungo: {titolo_piu_lungo} ({lunghezza_titolo})")
+
+lista_coppie = []
+vocali = ["a","e","i","o","u"]
+conteggi = [0,0,0,0,0]
+
+for titolo in titoli_non_duplicati:
+    for lettera in titolo:
+        if lettera in vocali:
+            i = vocali.index(lettera)
+            conteggi[i] += 1
+
+for vocale in vocali:
+    coppie = []
+    if vocale not in coppie:
+        coppie.append(vocale)
+        i = vocali.index(vocale)
+        for num in conteggi:
+            if conteggi.index(num) == i:
+                coppie.append(num)
+    
+    if coppie not in lista_coppie:
+        lista_coppie.append(coppie)
+               
+print(lista_coppie)
+
+da_saltare = ["il", "la", "lo", "le", "dei", "del", "di", "e", "della"]
+titolo_pulito = []
+
 for titolo in titoli_non_duplicati:
     
+    titolo = " " + titolo.lower()
+    
+    for salto in da_saltare:
+        if salto in titolo:
+            titolo = titolo.replace(f" {salto} " , " ")
+        
+    titolo_pulito.append(titolo.upper())
+        
+print(titolo_pulito)
+
+lettere = []
+
+for titolo in titolo_pulito:    
+    prime_lettere = [lettera[0] for lettera in titolo.split()]
+    parola = "".join(prime_lettere)
+    lettere.append(parola)
+
+for titolo in titoli_non_duplicati:
+    for elem in lettere:
+        if titoli_non_duplicati.index(titolo) == lettere.index(elem):
+            print(f"{titolo} -> {elem}")
+        
