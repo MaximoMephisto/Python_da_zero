@@ -11,7 +11,8 @@ liste_unite = rubrica_a + rubrica_b
 norm = []
 
 for persone in liste_unite:
-    persone = persone.capitalize()
+    
+    persone = persone.title()
     persone = " ".join(persone.split())
     if persone not in norm:
         norm.append(persone)
@@ -24,8 +25,8 @@ lettera_iniziali = ""
 for nomi in norm:
     nomi = nomi.split()
     for lettera in nomi:
-        lettera_iniziali = lettera_iniziali + lettera[0]
-    lettera_iniziali = lettera_iniziali + " "
+        lettera_iniziali += lettera[0]
+    lettera_iniziali += " "
     lettera_iniziali = lettera_iniziali.upper()
 
 iniziali_punto = []
@@ -37,7 +38,7 @@ for lettere in lettera_iniziali:
         lettera = list(lettera)
         lettera ='.'.join(lettera)
     iniziali_punto.append(lettera)
-# print(iniziali_punto)    
+#print(iniziali_punto)    
 
 iniziali = []
 
