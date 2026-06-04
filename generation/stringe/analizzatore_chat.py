@@ -1,6 +1,6 @@
-log_grezzo = "[09:15] anna: Ciao a tutti! qualcuno ha letto il libro che ho consigliato? #lettura @marco|[09:17] Marco: Ciao Anna! si lo sto leggendo, bellissimo @anna|[09:20] luca: io no ancora... troppo impegnato col lavoro #lavoro|[09:21] anna: dai @luca trovati cinque minuti! #lettura #consigli|[09:30] marco: secondo me a tutti piacerebbe #lettura @anna @luca|[10:05] giulia: scusate il ritardo!! di cosa parlate? @anna|[10:06] anna: ciao @giulia parlavamo di libri #lettura"
+log_grezzo = "[09:15] anna: Ciao a tutti! qualcuno ha letto il libro che ho consigliato? #lettura @marco |[09:17] Marco: Ciao Anna! si lo sto leggendo, bellissimo @anna|[09:20] luca: io no ancora... troppo impegnato col lavoro #lavoro|[09:21] anna: dai @luca trovati cinque minuti! #lettura #consigli|[09:30] marco: secondo me a tutti piacerebbe #lettura @anna @luca|[10:05] giulia: scusate il ritardo!! di cosa parlate? @anna|[10:06] anna: ciao @giulia parlavamo di libri #lettura"
 
-log_grezzo = log_grezzo.lower().split('|')
+log_grezzo = log_grezzo.split('|')
 qta_messagi = len(log_grezzo)
 
 print(f"{qta_messagi} messaggi")
@@ -114,17 +114,123 @@ for utente in menzioni:
     conto_utente = menzioni.count(utente)
     conto_menzioni[index_utente] = conto_utente
 
+
 for cont, utente in zip(conto_menzioni, menzioni):
+    
     coppie_menzioni = []
-
-    coppie_menzioni.append(utente)
-    coppie_menzioni.append(cont)
-
-    lista_menzioni.append(coppie_menzioni)
     
-    
+    if cont == 0:
+        continue
+    else:
+        coppie_menzioni.append(utente)
+        coppie_menzioni.append(cont)
         
-    
-print(lista_menzioni)
+    lista_menzioni.append([utente, cont])
 
+print(f"Lista menzioni: {lista_menzioni}")
+print("----------")
+
+commenti = []
+
+for testo in testi:
+    parole = testo.split()
+    for elem in parole:
+        if "#" in elem:
+            commenti.append(elem)          
+
+commenti_no_duplicati = []
+for commento in commenti:
+    if commento not in commenti_no_duplicati:
+        commenti_no_duplicati.append(commento)
+        
+print(commenti_no_duplicati)
+print("----------")
+
+
+print(f"Hashtag piu usato: {max(commenti)} ({commenti.count(max(commenti))} volte)")
+print("----------")
+
+qta_parole = []
+tot_parole = 0
+for testo in testi:
+    parole = testo.split()
+    qta_parole.append(len(parole))
     
+tot_parole += sum(qta_parole)
+print(f"Parole totali: {tot_parole}")
+print("----------")
+
+max_parole = 0
+utente_max_parole = ""
+
+for utente, testo in zip(utenti, testi):
+    piu_parole = len(testo)
+    if piu_parole > max_parole:
+        max_parole = piu_parole
+        utente_max_parole = utente
+print(f"Messagio piu lungo: {utente_max_parole} ({max_parole} caratteri)")
+print("----------")
+
+for messagi in tutti_messagi:
+    if "libr" in messagi[2]:
+        print(f"{messagi[0]} {messagi[1]} -> {messagi[2].capitalize()}")
+print("----------")
+
+censured = "ciao"
+
+for testo in testi:
+    if censured in testo.lower():
+        testo = testo.lower().replace(censured, "****")
+        print(testo)
+print("----------")
+
+for utente, testo in zip(utenti, testi):
+    if utente == "anna":
+        print(testo.upper())
+print("----------")
+
+        
+qta_testo = 0
+tipo_orario = 0
+messagi_fascie_oraria = []
+
+for ora in ore:
+    if ora[:2] == '09':
+        qta_testo += 1
+        tipo_orario = ora[:2]
+        
+messagi_fascie_oraria.append([tipo_orario, qta_testo])
+
+qta_testo = 0
+tipo_orario = 0
+
+for ora in ore:
+    if ora[:2] == '10':
+        qta_testo += 1
+        tipo_orario = ora[:2]
+        
+messagi_fascie_oraria.append([tipo_orario, qta_testo])
+        
+print(messagi_fascie_oraria)
+print("----------")
+
+for ora, utente, testo in zip(ore, utenti, testi):
+    print(f"{ora} | {utente.upper()} -> {testo}")
+    
+#     Sfida bonus
+
+# 19. Step 19. Cifrario di Cesare. Scrivi un blocco che, data una stringa e un numero k, sposti
+# ogni lettera di k posizioni nell'alfabeto (lascia invariati spazi e simboli). Usa ord() e chr().
+# Cifra un messaggio con k=3 e poi decifralo con k=-3 per verificare che torni l'originale.
+# Esempio con k = 3:
+# originale: "ciao a tutti"
+# cifrato: "fldr d wxwwl"
+# decifrato: "ciao a tutti"
+# 20. Step 20. Usa input() per far inserire un nuovo messaggio nel formato ora;utente;testo.
+# Validalo: deve avere 3 campi, l'ora nel formato HH:MM (5 caratteri con i due punti in
+# posizione 2). Se valido, aggiungilo alla lista e ristampa il report aggiornato.
+# Esempio valido:
+# 09:45;teo;arrivo anch'io! #lettura -> aggiunto
+# Esempi rifiutati:
+# ciao a tutti -> errore: servono 3 campi
+# 9.45;teo;ciao -> errore: ora non valida
