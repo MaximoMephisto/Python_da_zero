@@ -1,10 +1,29 @@
-log_grezzo = "[09:15] anna: Ciao a tutti! qualcuno ha letto il libro che ho consigliato? #lettura @marco |[09:17] Marco: Ciao Anna! si lo sto leggendo, bellissimo @anna|[09:20] luca: io no ancora... troppo impegnato col lavoro #lavoro|[09:21] anna: dai @luca trovati cinque minuti! #lettura #consigli|[09:30] marco: secondo me a tutti piacerebbe #lettura @anna @luca|[10:05] giulia: scusate il ritardo!! di cosa parlate? @anna|[10:06] anna: ciao @giulia parlavamo di libri #lettura"
+#     Sfida bonus
+# 19. Step 19. Cifrario di Cesare. Scrivi un blocco che, data una stringa e un numero k, sposti
+# ogni lettera di k posizioni nell'alfabeto (lascia invariati spazi e simboli). Usa ord() e chr().
+# Cifra un messaggio con k=3 e poi decifralo con k=-3 per verificare che torni l'originale.
+# Esempio con k = 3:
+# originale: "ciao a tutti"
+# cifrato: "fldr d wxwwl"
+# decifrato: "ciao a tutti"
+# 20. Step 20. Usa input() per far inserire un nuovo messaggio nel formato ora;utente;testo.
+# Validalo: deve avere 3 campi, l'ora nel formato HH:MM (5 caratteri con i due punti in
+# posizione 2). Se valido, aggiungilo alla lista e ristampa il report aggiornato.
+# Esempio valido:
+# 09:45;teo;arrivo anch'io! #lettura -> aggiunto
+# Esempi rifiutati:
+# ciao a tutti -> errore: servono 3 campi
+# 9.45;teo;ciao -> errore: ora non valida
+ciclo = 1
 
-log_grezzo = log_grezzo.split('|')
-qta_messagi = len(log_grezzo)
-
-print(f"{qta_messagi} messaggi")
-print("----------")
+while ciclo == 1:
+    
+    log_grezzo = input("Inserisci messagio (Es. Ora;utente;messagio): ")
+    dati_messagio = log_grezzo.split(";")
+    while len(dati_messagio) < 3:
+        print("Errore, ci devono essere 3 dati.")
+        log_grezzo = input("Inserisci messagio (Es. Ora;utente;messagio): ")
+        
 
 ore = []
 utenti = []
@@ -12,6 +31,9 @@ testi = []
 
 tutti_messagi = []
 
+qta_messagi = len(tutti_messagi)
+print(f"{qta_messagi} messaggi")
+print("----------")
 
 for dati in log_grezzo:
     messagi = []

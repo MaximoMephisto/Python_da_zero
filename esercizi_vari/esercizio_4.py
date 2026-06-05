@@ -5,11 +5,12 @@
 # 0, 1, 1, 2, 3, 5, 8, 13...
 
 inizio = 1
-num_anteriore = 0
+num_anteriore = -1
+sequenza = 0
 
 for i in range(50):
-    if i < inizio:
-        num_anteriore = i + inizio
+    if num_anteriore < inizio:
+        num_anteriore += inizio
+    inizio += num_anteriore
         
-    inizio += 1
-    print(inizio)
+    print(num_anteriore)
