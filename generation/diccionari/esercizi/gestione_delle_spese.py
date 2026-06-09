@@ -9,6 +9,7 @@ while True:
     1) Inserire spesa.
     2) Controllare bilancio.
     3) Modificare spesa.
+    4) Exit.
           ''')
     
     opt = input("scegliere una opzione: ")
@@ -39,10 +40,23 @@ while True:
                     
         elif opt == 2:
             for descrizione, dati in spese.items():
+                print(f"{descrizione}")
                 for dato in dati:
-                    print(f"{dato}: {dati[dato]}")
+                    print(f"{dato}: {dati[dato]} \n")
         elif opt == 3:
-            pass
+            modifica = input("Inserire la descripzione della spesa a modificare: ")
+            if modifica in spese:
+                spesa = input("Inserire spesa (Descrizione/importo/categoria): ")
+                dati_spesa = spesa.split("/")
+                cambio = spese.pop(modifica)
+                spese[modifica] = cambio
+                dati_spesa[1] = float(dati_spesa[1])
+                spese[modifica] = dict({'Importo':dati_spesa[1],'Categoria':dati_spesa[2]})
+            else:
+                print("Spesa non trovata. Modifica non disponibile.")
+        elif opt == 4:
+            print("Cia!")
+            break
         else:
             print("Numero fuori range.")
     else:    
