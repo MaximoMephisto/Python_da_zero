@@ -202,6 +202,37 @@ def creazione_dict(file):
 
     return librerie
 
+def sposta_brano(dicz, primo_nome, secondo_nome, brano, ind):
+    if primo_nome in dicz:
+        for brani in dicz[primo_nome]:
+            if brano in brani:
+                verifica = True
+                aggiungi_brano(dicz, secondo_nome, brani, ind)
+                #rimuovi_brano(dicz, primo_nome, brano, ind) se vogliamo rimuovere il brano spostato
+        if verifica == False:
+            print("Brano non trovato.")
+            
+    else:
+        print("Utente non trovato.")
+    
+    
+def ordina_libreria(librerie, nome, criterio):
+    pass
+
+def classifica_artisti(librerie):
+    branis = []
+    max_bran = 0
+    max_elem = ""
+    for utenti, brani in librerie.items():
+        for brano in brani:
+            branis.append(brano)
+    for elem in branis:
+        if branis.count(elem) > max_bran:
+            max_bran = branis.count(elem)
+            max_elem = elem[0]
+                
+    print(max_elem)
+
 def main():
     
     indirizzo = 'generation/file/librerie.txt'
@@ -212,7 +243,7 @@ def main():
         print("1)  Mostra tutte le librerie")
         print("2)  Mostra i brani di un utente")
         print("3)  Aggiungi un brano a un utente")
-        print("4)  Rimuovi un brano a un utente nuovo")
+        print("4)  Rimuovi un brano a un utente")
         print("5)  Aggiungi un nuovo utente")
         print("6)  Rimuovi un utente")
         print("7)  Cerca un brano e mostra chi lo possiede")
@@ -222,6 +253,9 @@ def main():
         print("11) Brani in comune tra due utenti")
         print("12) Brano più presente")
         print("13) Far vedere tutti")
+        print("14) Sposta un brano da un utente a un altro")
+        print("15) Ordina la libreria di un utente")
+        print("16) Classifica artisti per numero di brani")
         print("0)  Esci")
         print("===================================================")
         
@@ -281,6 +315,20 @@ def main():
                 
             elif scelta == 13:
                 output(librerie)
+                
+            elif scelta == 14:
+                origine = input("Utente di origine: ")
+                destinazione = input("Utente di destinazione: ")
+                titolo = input("Titolo del brano da spostare: ")
+                sposta_brano(librerie, origine, destinazione, titolo, indirizzo)
+
+            elif scelta == 15:
+                nome = input("Utente: ")
+                criterio = input("Ordina per (titolo/artista/durata): ")
+                ordina_libreria(librerie, nome, criterio)
+
+            elif scelta == 16:
+                classifica_artisti(librerie)
                 
             elif scelta == 0:
                 print("Alla prossima!")
