@@ -23,32 +23,68 @@ def mostra_tutte(librerie):
 def mostra_utente(librerie, nome):
     utente_esiste(librerie, nome)
 
-def aggiungi_brano(librerie, nome, brano):
+def aggiungi_brano(librerie, nome, brano, file):
     if nome not in librerie:
         print("Utente non trovato.")
     elif brano in librerie[nome]:
         print("Brano esistente.")
     else:
         librerie[nome].append(brano)
+                    
+        testo_nuovo = diz_testo(librerie)
 
-def rimuovi_brano(librerie, nome, titolo):
+        with open(file, "w", encoding="utf-8") as f:
+            f.write(testo_nuovo)
+
+def rimuovi_brano(librerie, nome, titolo, file):
     verifica = False
     if nome in librerie:
         for brani in librerie[nome]:
             if titolo in brani:
                 librerie[nome].remove(brani)
                 verifica = True
+
         if verifica == False:
             print("Brano non trovato.")
+    
+    testo_nuovo = diz_testo(librerie)
+    
+    with open(file, 'w') as f:
+        f.write(testo_nuovo)
+        
 
-def aggiungi_utente(librerie, nome):
+def aggiungi_utente(librerie, nome, file):
+
     if nome not in librerie:
-        librerie[nome] = []
-
-def rimuovi_utente(librerie, nome):
+       librerie[nome] = []
+       print(nome)
+       with open(file, 'a') as f:
+           f.write("\n" + nome + ", ")
+        
+    
+def rimuovi_utente(librerie, nome, file):
     if nome in librerie:
         del librerie[nome]
+        
+    with open(file, 'r') as f:
+        lineas = f.readlines()
+        
+    with open(file, 'w') as f:
+        for linea in lineas:
+            if nome not in linea:
+                f.write(linea)
+            else:
+                f.write("")
 
+def diz_testo(dict):
+    
+    testo = ""
+    for elem in dict:
+        for brano in dict[elem]:
+            testo += elem + ", " + brano[0] + ", " + brano[1] + ", " + brano[2] + "\n"
+
+    return testo
+    
 def cerca_brano(librerie, titolo):
     titolo = titolo.lower()
     for nomi in librerie:
@@ -138,27 +174,24 @@ def creazione_dict(file):
     
     lista = []
     for elem in l:
-        l2 = []
-        l2 = elem.split(", ")
-        lista.append(l2)
-        
-    keys = []
-    dati = []
-    for elem in lista:
-        brano = []
-        if elem[0] not in keys:
-            keys.append(elem[0])
-        brano = [elem[0], elem[1], elem[2], elem[3]]
-        dati.append(tuple(brano))
-    
-    #print(keys)
+        if elem != "":
+            l2 = []
+            l2 = elem.split(", ")
+            lista.append(l2)
+            
+        keys = []
+        dati = []
+        for elem in lista:
+            brano = []
+            if elem[0] not in keys:
+                keys.append(elem[0])
+            brano = [elem[0], elem[1], elem[2], elem[3]]
+            dati.append(tuple(brano))
     
     librerie = dict()
     
     for utenti in keys:
         librerie[utenti] = []
-    
-    #print(librerie)
     
     for brano in dati:
         brano_list = list(brano)
@@ -166,30 +199,10 @@ def creazione_dict(file):
             if utenti in brano_list:
                 brano_tuple = tuple(brano_list[1:])
                 librerie[utenti].append(brano_tuple)
-               
-    # for elem1, elem2 in librerie.items():
-    #     print(elem1, elem2)
 
     return librerie
-    
+
 def main():
-    
-    # librerie = {
-    #     "Marco": [
-    #         ("Bohemian Rhapsody", "Queen", 355),
-    #         ("Imagine", "John Lennon", 183),
-    #         ("Hotel California", "Eagles", 391),
-    #     ],
-    #     "Luca": [
-    #         ("Imagine", "John Lennon", 183),
-    #         ("Smells Like Teen Spirit", "Nirvana", 301),
-    #     ],
-    #     "Sara": [
-    #         ("Bohemian Rhapsody", "Queen", 355),
-    #         ("Shape of You", "Ed Sheeran", 234),
-    #         ("Imagine", "John Lennon", 183),
-    #     ],
-    # }
     
     indirizzo = 'generation/file/librerie.txt'
     librerie = creazione_dict(indirizzo)
@@ -199,7 +212,7 @@ def main():
         print("1)  Mostra tutte le librerie")
         print("2)  Mostra i brani di un utente")
         print("3)  Aggiungi un brano a un utente")
-        print("4)  Rimuovi un brano a un utente")
+        print("4)  Rimuovi un brano a un utente nuovo")
         print("5)  Aggiungi un nuovo utente")
         print("6)  Rimuovi un utente")
         print("7)  Cerca un brano e mostra chi lo possiede")
@@ -227,22 +240,22 @@ def main():
                 nome = input("Utente: ")
                 titolo = input("Titolo: ")
                 artista = input("Artista: ")
-                durata = int(input("Durata (secondi): "))
+                durata = input("Durata (secondi): ")
                 brano = (titolo, artista, durata)
-                aggiungi_brano(librerie, nome, brano)
+                aggiungi_brano(librerie, nome, brano, indirizzo)
 
             elif scelta == 4:
                 nome = input("Utente: ")
                 titolo = input("Titolo da rimuovere: ")
-                rimuovi_brano(librerie, nome, titolo)
+                rimuovi_brano(librerie, nome, titolo, indirizzo)
 
             elif scelta == 5:
                 nome = input("Nome nuovo utente: ")
-                aggiungi_utente(librerie, nome)
+                aggiungi_utente(librerie, nome, indirizzo)
 
             elif scelta == 6:
                 nome = input("Utente da rimuovere: ")
-                rimuovi_utente(librerie, nome)
+                rimuovi_utente(librerie, nome, indirizzo)
 
             elif scelta == 7:
                 titolo = input("Titolo da cercare: ")
