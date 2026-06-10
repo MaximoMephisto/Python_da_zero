@@ -126,26 +126,73 @@ def brano_piu_presente(librerie):
     for i in range(len(max_elem)):
         print(f"{max_elem[i]} -> {maxi_bran[i]}")
 
-def main():
-    librerie = {
-        "Marco": [
-            ("Bohemian Rhapsody", "Queen", 355),
-            ("Imagine", "John Lennon", 183),
-            ("Hotel California", "Eagles", 391),
-        ],
-        "Luca": [
-            ("Imagine", "John Lennon", 183),
-            ("Smells Like Teen Spirit", "Nirvana", 301),
-        ],
-        "Sara": [
-            ("Bohemian Rhapsody", "Queen", 355),
-            ("Shape of You", "Ed Sheeran", 234),
-            ("Imagine", "John Lennon", 183),
-        ],
-    }
+def output(librerie):
+    for nome in librerie:
+        for titolo, artista, durata in librerie[nome]:
+            print(f"{nome}, {titolo}, {artista}, {durata}")
+
+def creazione_dict(file):
+    with open(file) as f:
+        contenuto = f.read()
+    l = contenuto.split('\n')
     
-    for nom in librerie.keys():
-        print(nom.lower())
+    lista = []
+    for elem in l:
+        l2 = []
+        l2 = elem.split(", ")
+        lista.append(l2)
+        
+    keys = []
+    dati = []
+    for elem in lista:
+        brano = []
+        if elem[0] not in keys:
+            keys.append(elem[0])
+        brano = [elem[0], elem[1], elem[2], elem[3]]
+        dati.append(tuple(brano))
+    
+    #print(keys)
+    
+    librerie = dict()
+    
+    for utenti in keys:
+        librerie[utenti] = []
+    
+    #print(librerie)
+    
+    for brano in dati:
+        brano_list = list(brano)
+        for utenti in keys:
+            if utenti in brano_list:
+                brano_tuple = tuple(brano_list[1:])
+                librerie[utenti].append(brano_tuple)
+               
+    # for elem1, elem2 in librerie.items():
+    #     print(elem1, elem2)
+
+    return librerie
+    
+def main():
+    
+    # librerie = {
+    #     "Marco": [
+    #         ("Bohemian Rhapsody", "Queen", 355),
+    #         ("Imagine", "John Lennon", 183),
+    #         ("Hotel California", "Eagles", 391),
+    #     ],
+    #     "Luca": [
+    #         ("Imagine", "John Lennon", 183),
+    #         ("Smells Like Teen Spirit", "Nirvana", 301),
+    #     ],
+    #     "Sara": [
+    #         ("Bohemian Rhapsody", "Queen", 355),
+    #         ("Shape of You", "Ed Sheeran", 234),
+    #         ("Imagine", "John Lennon", 183),
+    #     ],
+    # }
+    
+    indirizzo = 'generation/file/librerie.txt'
+    librerie = creazione_dict(indirizzo)
     
     while True:
         print("===================================================")
@@ -161,6 +208,7 @@ def main():
         print("10) Tutti gli artisti senza duplicati")
         print("11) Brani in comune tra due utenti")
         print("12) Brano più presente")
+        print("13) Far vedere tutti")
         print("0)  Esci")
         print("===================================================")
         
@@ -217,7 +265,10 @@ def main():
 
             elif scelta == 12:
                 brano_piu_presente(librerie)
-
+                
+            elif scelta == 13:
+                output(librerie)
+                
             elif scelta == 0:
                 print("Alla prossima!")
                 break
