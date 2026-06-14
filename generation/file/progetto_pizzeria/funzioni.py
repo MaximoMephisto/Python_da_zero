@@ -1,0 +1,229 @@
+def verifica_opt(opt, ordini, prezzi, indirizzo):
+    if opt == 1:
+        mostra_listino(prezzi)
+    elif opt == 2:
+        mostra_tutti_ordini(ordini)
+    elif opt == 3:
+        mostra_ordini_cliente(ordini)
+    elif opt == 4:
+        nuovo_cliente(ordini, indirizzo)
+    elif opt == 5:
+        aggiungi_pizza(ordini, prezzi, indirizzo)
+    elif opt == 6:
+        rimuovi_pizza(ordini, prezzi, indirizzo)
+    elif opt == 7:
+        conto(ordini, prezzi)
+    elif opt == 8:
+        incasso(ordini, prezzi)
+    elif opt == 9:
+        pass
+    elif opt == 10:
+        pass
+    elif opt == 11:
+        pass
+    elif opt == 12:
+        pass
+    else:
+        print("Scegliere un numero dentro le opzioni.")
+
+
+def dict_a_testo(ordini):
+    testo = ""
+    
+    for cliente, ordine in ordini.items():
+        for pizza in ordine:
+            testo += f"{cliente},{pizza}\n"
+
+    return testo
+
+def creazione_dict(file):
+    lista_ordini = []
+    clienti = []
+    ordini_dict = dict()
+    
+    with open(file, 'r', encoding='utf-8') as f:
+        testo_ordini = f.read()
+    
+    testo_ordini = testo_ordini.replace(',', ', ').split('\n')
+    lista_ordini_testo = testo_ordini
+    
+    for elem in lista_ordini_testo:
+        elem = elem.strip()
+        if not elem:
+            continue
+    
+        ordine = elem.split(',')
+        if len(ordine) < 2:
+            continue
+        
+        lista_ordini.append(ordine)
+    
+    for ordine in lista_ordini:
+        cliente = ordine[0].strip()
+        clienti.append(cliente)
+    
+    clienti = set(clienti)
+    for elem in clienti:
+        ordini_dict[elem] = []
+        
+    for ordine in lista_ordini:
+        cliente = ordine[0].strip()
+        prodotto = ordine[1].strip()
+        
+        if cliente in ordini_dict:
+            if prodotto:
+                ordini_dict[cliente].append(prodotto)
+    
+    return ordini_dict
+
+
+def creazione_dict_prezzi(file):
+    lista_prezzi = []
+    prezzi = dict()
+    
+    with open(file, 'r', encoding='utf-8') as f:
+        testo_prezzi = f.read()
+    
+    testo_prezzi = testo_prezzi.replace('€', ' ').split('\n')
+    lista_testo_prezzi = testo_prezzi
+    
+    for elem in lista_testo_prezzi:
+        info = elem.split(',')
+        lista_prezzi.append(info)
+    
+    for elem in lista_prezzi:
+        prezzi[elem[0]] = None
+
+    for elem in lista_prezzi:
+        prezzo = elem[1].strip()
+        for keys in prezzi:
+            if elem[0] == keys:
+                prezzi[keys] = float(prezzo)
+    
+    return prezzi
+        
+    
+def mostra_listino(prezzi):
+    for pizza, prezzo in sorted(prezzi.items()):
+        prezzo = f"{prezzo:.2f}"
+        print(f"{pizza} -> €{prezzo}")
+        
+        
+def mostra_tutti_ordini(ordini):
+    for cliente, pizza in ordini.items():
+        print(f"{cliente} -> {pizza}")
+        
+
+def verifica_cliente(cliente, ordini):
+    for nome in ordini:
+        if cliente.lower() == nome.lower():
+            return True
+
+
+def mostra_ordini_cliente(ordini):
+    cliente = input("Inserisci nome del cliente: ")
+    
+    if verifica_cliente(cliente, ordini):
+        cliente = cliente.title()
+        cont = 0
+        
+        print("-----")
+        print(cliente)
+        for ordine in ordini[cliente]:
+            cont += 1
+            print(f"Ordine N{cont} -> {ordine}")
+            
+    else:
+        print("Cliente non trovato.")       
+        
+        
+def nuovo_cliente(ordini, file):
+    cliente = input("Inserire nuovo cliente: ")
+    
+    if not verifica_cliente(cliente, ordini):
+        cliente = cliente.title()
+        ordini[cliente] = []
+        
+        with open(file, 'a', encoding='utf-8') as f:
+            f.write(f"\n{cliente},")
+        
+    else:
+        print("Cliente già registrato.")
+        
+        
+def verifica_pizza(pizza, prezzi):
+    for elem in prezzi:
+        if pizza.lower() in elem.lower():
+            return True
+        
+                
+def aggiungi_pizza(ordini, prezzi, file):
+    cliente = input("Inserisci il cliente per l'ordine: ")
+    
+    if verifica_cliente(cliente, ordini):
+        cliente = cliente.title()
+        
+        nuova_pizza = input("Inserisci pizza da ordinare: ")
+        if verifica_pizza(nuova_pizza, prezzi):
+            nuova_pizza = nuova_pizza.title()
+            ordini[cliente].append(nuova_pizza)
+            
+            nuovo_testo = dict_a_testo(ordini)
+            
+            with open(file, 'w', encoding='utf-8') as f:
+                f.write(nuovo_testo)
+                
+        else:
+            print("Pizza non disponibile sul menu.")
+    
+    else:
+        print("Cliente non trovato.")
+        
+        
+def rimuovi_pizza(ordini, prezzi, file):
+    cliente = input("Inserisci nome del cliente per anullare ordine: ")
+    
+    if verifica_cliente(cliente, ordini):
+        cliente = cliente.title()
+        pizza = input("Inserisci ordine da anullare: ")
+        
+        if verifica_pizza(pizza, prezzi):
+            pizza = pizza.title()
+            ordini[cliente].remove(pizza)
+            
+            with open(file, 'w', encoding='utf-8') as f:
+                testo_nuovo = dict_a_testo(ordini)
+                f.write(testo_nuovo)
+            
+        else:
+            print("Ordine non trovata.")
+            
+    else:
+        print("Cliente non trovato.")
+        
+
+def conto(ordini, prezzi):
+    cliente = input("Inserisci cliente: ")
+    
+    if verifica_cliente(cliente, ordini):
+        cliente = cliente.title()
+        totale = 0
+        for elem in ordini[cliente]:
+            for pizza, prezzo in prezzi.items():
+                if elem == pizza:
+                    totale += prezzo
+                    
+        print(f"Il conto di {cliente} è di {totale:.2f}€")
+        
+
+def incasso(ordini, prezzi):
+    incasso = 0
+    
+    for pizze in ordini.values():
+        for pizza in pizze:
+            for tipo, prezzo in prezzi.items():
+                if pizza == tipo:
+                    incasso += prezzo
+    
+    print(f"Incasso totale: {incasso:.2f}€")
+    

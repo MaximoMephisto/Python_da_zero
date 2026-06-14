@@ -1,0 +1,7 @@
+Margherita,€5.50
+Marinara,€4.50
+Diavola,€7.00
+Capricciosa,€8.00
+Quattro Formaggi,€8.50
+Bufala,€9.00
+Ortolana,€7.50
