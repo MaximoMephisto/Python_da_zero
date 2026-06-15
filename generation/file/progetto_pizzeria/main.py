@@ -1,4 +1,5 @@
 from utility import menu
+import time
 
 from funzioni import creazione_dict, verifica_opt, creazione_dict_prezzi
 
@@ -25,5 +26,6 @@ def main():
         else:
             print("Errore, il valore deve essere un numero")
         
+        time.sleep(2)
 
 main()

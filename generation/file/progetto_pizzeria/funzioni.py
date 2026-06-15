@@ -4,13 +4,40 @@ def verifica_opt(opt, ordini, prezzi, indirizzo):
     elif opt == 2:
         mostra_tutti_ordini(ordini)
     elif opt == 3:
-        mostra_ordini_cliente(ordini)
+        while True:
+            print("1) Inserire direttamente nome. ")
+            print("2) Vedere lista di clienti e scegliere. ")
+            scelta = input("Inserisce opzione: ")
+            if scelta.isnumeric():
+                scelta = int(scelta)
+                if scelta == 1:
+                    mostra_ordini_cliente(ordini)
+                    break
+                elif scelta == 2:
+                    mostra_ordini_cliente_opt(ordini)
+                    break
+                else:
+                    print("Scelta non valita.")
     elif opt == 4:
         nuovo_cliente(ordini, indirizzo)
     elif opt == 5:
         aggiungi_pizza(ordini, prezzi, indirizzo)
     elif opt == 6:
-        rimuovi_pizza(ordini, prezzi, indirizzo)
+        while True:
+            print("1) Inserire direttamente nome. ")
+            print("2) Vedere lista di clienti e scegliere. ")
+            scelta = input("Inserire opzione: ")
+            if scelta.isnumeric():
+                scelta = int(scelta)
+                if scelta == 1:
+                    rimuovi_pizza(ordini, prezzi, indirizzo)
+                    break
+                elif scelta == 2:
+                    rimuovi_pizza_opt(ordini, indirizzo)
+                    break
+                else:
+                    print("Scelta non valita.") 
+            
     elif opt == 7:
         conto(ordini, prezzi)
     elif opt == 8:
@@ -161,7 +188,46 @@ def mostra_ordini_cliente(ordini):
             if pausa:
                 break     
         
+def mostra_ordini_cliente_opt(ordini):
+    cont = 0
+    print("Sceglie il cliente")
+    for clienti in ordini:
+        cont += 1
+        print(f"{cont}) {clienti}")
+
+    while True:
+        continua_sequenza = False
         
+        scelta = input("Inserire opzione: ")
+        if scelta.isnumeric():
+            scelta = int(scelta)
+            scelta -= 1
+            ciclo = len(ordini.keys())
+            
+            cliente_trovato = False
+            
+            for i in range(ciclo):
+                lista_clienti = list(ordini.keys())
+                if scelta == i:
+                    cliente = lista_clienti[scelta]
+                    for ordine in ordini[cliente]:
+                        print(f"Ordine di {cliente} -> {ordine}")
+                        
+                    cliente_trovato = True
+                    break
+                
+            if not cliente_trovato:
+                print("Errore, scelta fuori range.")
+                continua_sequenza = True
+
+            if continua_sequenza:
+                continue
+            
+        else:
+            print("Errore, caratteri sbagliati.")
+            continue
+        break
+          
 def nuovo_cliente(ordini, file):
     while True:
         cliente = input("Inserire nuovo cliente: ")
@@ -328,6 +394,81 @@ def rimuovi_pizza(ordini, prezzi, file):
                     
             if pausa:
                 break
+
+
+def rimuovi_pizza_opt(ordini, file):
+    cont = 0
+    print("Sceglie cliente per rimuovere ordine")
+    for clienti in ordini:
+        cont += 1
+        print(f"{cont}) {clienti}")
+    
+    while True:
+        continua_sequenza = False
+        
+        scelta = input("Inserire opzione (cliente): ")
+        if scelta.isnumeric():
+            scelta = int(scelta)
+            scelta -= 1
+            conto_pizza = 0
+            ciclo = len(ordini.keys())
+            pizza_da_rimuovere = 0
+            
+            cliente_trovato = False
+            
+            for i in range(ciclo):
+                lista_clienti = list(ordini.keys())
+                if scelta == i:
+                    cliente = lista_clienti[scelta]
+                    
+                    cliente_trovato = True
+                    
+                    for ordine in ordini[cliente]:
+                        conto_pizza += 1
+                        print(f"{conto_pizza}) {ordine}")
+
+                    scelta_pizza = input("Scegli una opzione: ")
+                    if scelta_pizza.isnumeric():
+                        scelta_trovata = False
+                        scelta_pizza = int(scelta_pizza)
+                        scelta_pizza -= 1
+                        ciclo_pizze = len(ordini[cliente])
+                        
+                        for i in range(ciclo_pizze):
+                            list_pizze = list(ordini[cliente])
+                            if scelta_pizza == i:
+                                scelta_trovata = True
+                                
+                                pizza_da_rimuovere = scelta_pizza
+                                indice_pizza = list_pizze[pizza_da_rimuovere]
+                                break
+                        
+                        if not scelta_trovata:
+                            print("Scelta fuori range.")
+                            continua_sequenza = True
+
+                        
+                    break
+        
+            if not cliente_trovato:
+                print("Errore. Scelta fuori range.")
+                continua_sequenza = True
+                    
+            if continua_sequenza:
+                continue
+            
+            ordini[cliente].remove(indice_pizza)
+            with open(file, 'w', encoding='utf-8') as f:
+                testo_nuovo = dict_a_testo(ordini)
+                f.write(testo_nuovo)
+                
+            print("Ordine rimossa.")
+            
+        else:
+            print("Errore, caratteri sbagliati.")
+            continue
+        
+        break
 
 
 def conto(ordini, prezzi):
