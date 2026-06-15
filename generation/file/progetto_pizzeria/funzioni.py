@@ -16,13 +16,18 @@ def verifica_opt(opt, ordini, prezzi, indirizzo):
     elif opt == 8:
         incasso(ordini, prezzi)
     elif opt == 9:
-        pass
+        list_pizze_ordinate = pizze_ordinate(ordini)
+        cont = 0
+        for elem in sorted(list_pizze_ordinate):
+            cont += 1
+            print(f" {cont}) {elem}")
+            
     elif opt == 10:
-        pass
+        pizze_non_ordinate(ordini, prezzi)
     elif opt == 11:
-        pass
+        pizza_piu_ordinata(ordini)
     elif opt == 12:
-        pass
+        cliente_fisso(ordini, prezzi)
     else:
         print("Scegliere un numero dentro le opzioni.")
 
@@ -35,6 +40,7 @@ def dict_a_testo(ordini):
             testo += f"{cliente},{pizza}\n"
 
     return testo
+
 
 def creazione_dict(file):
     lista_ordini = []
@@ -121,34 +127,72 @@ def verifica_cliente(cliente, ordini):
 
 
 def mostra_ordini_cliente(ordini):
-    cliente = input("Inserisci nome del cliente: ")
+    while True:
+        cliente = input("Inserisci nome del cliente: ")
     
-    if verifica_cliente(cliente, ordini):
-        cliente = cliente.title()
-        cont = 0
-        
-        print("-----")
-        print(cliente)
-        for ordine in ordini[cliente]:
-            cont += 1
-            print(f"Ordine N{cont} -> {ordine}")
+        if verifica_cliente(cliente, ordini):
+            cliente = cliente.title()
+            cont = 0
             
-    else:
-        print("Cliente non trovato.")       
+            print("-----")
+            print(cliente)
+            for ordine in ordini[cliente]:
+                cont += 1
+                print(f"Ordine N{cont} -> {ordine}")
+                
+            break
+                
+        else:
+            print("Cliente non trovato.")   
+            
+            while True:
+                pausa = False
+                
+                scelta = input("Vuole riprovare? (S/n): ")
+                scelta = scelta.lower()
+                if scelta == "s":
+                    break
+                elif scelta == "n":
+                    pausa = True
+                    break
+                else:
+                    print("Errore, inserire una opzione valita (s / n)")
+                    
+            if pausa:
+                break     
         
         
 def nuovo_cliente(ordini, file):
-    cliente = input("Inserire nuovo cliente: ")
+    while True:
+        cliente = input("Inserire nuovo cliente: ")
     
-    if not verifica_cliente(cliente, ordini):
-        cliente = cliente.title()
-        ordini[cliente] = []
-        
-        with open(file, 'a', encoding='utf-8') as f:
-            f.write(f"\n{cliente},")
-        
-    else:
-        print("Cliente già registrato.")
+        if not verifica_cliente(cliente, ordini):
+            cliente = cliente.title()
+            ordini[cliente] = []
+            
+            with open(file, 'a', encoding='utf-8') as f:
+                f.write(f"\n{cliente},")
+                
+            break
+            
+        else:
+            print("Cliente già registrato.")
+            
+            while True:
+                pausa = False
+                
+                scelta = input("Vuole riprovare? (S/n): ")
+                scelta = scelta.lower()
+                if scelta == "s":
+                    break
+                elif scelta == "n":
+                    pausa = True
+                    break
+                else:
+                    print("Errore, inserire una opzione valita (s / n)")
+                    
+            if pausa:
+                break
         
         
 def verifica_pizza(pizza, prezzi):
@@ -158,63 +202,168 @@ def verifica_pizza(pizza, prezzi):
         
                 
 def aggiungi_pizza(ordini, prezzi, file):
-    cliente = input("Inserisci il cliente per l'ordine: ")
+    while True:
+        cliente = input("Inserisci il cliente per l'ordine: ")
     
-    if verifica_cliente(cliente, ordini):
-        cliente = cliente.title()
-        
-        nuova_pizza = input("Inserisci pizza da ordinare: ")
-        if verifica_pizza(nuova_pizza, prezzi):
-            nuova_pizza = nuova_pizza.title()
-            ordini[cliente].append(nuova_pizza)
+        if verifica_cliente(cliente, ordini):
+            cliente = cliente.title()
             
-            nuovo_testo = dict_a_testo(ordini)
-            
-            with open(file, 'w', encoding='utf-8') as f:
-                f.write(nuovo_testo)
+            nuova_pizza = input("Inserisci pizza da ordinare: ")
+            if verifica_pizza(nuova_pizza, prezzi):
+                nuova_pizza = nuova_pizza.title()
+                ordini[cliente].append(nuova_pizza)
                 
+                nuovo_testo = dict_a_testo(ordini)
+                
+                with open(file, 'w', encoding='utf-8') as f:
+                    f.write(nuovo_testo)
+                    
+                break
+            
+            else:
+                print("Pizza non disponibile sul menu.")
+                while True:
+                    pausa = False
+                    
+                    scelta = input("Vuole riprovare? (S/n): ")
+                    scelta = scelta.lower()
+                    if scelta == "s":
+                        break
+                    elif scelta == "n":
+                        pausa = True
+                        break
+                    else:
+                        print("Errore, inserire una opzione valita (s / n)")
+                        
+                if pausa:
+                    break 
+        
         else:
-            print("Pizza non disponibile sul menu.")
-    
-    else:
-        print("Cliente non trovato.")
+            print("Cliente non trovato.")
+            while True:
+                pausa = False
+                
+                scelta = input("Vuole riprovare? (S/n): ")
+                scelta = scelta.lower()
+                if scelta == "s":
+                    break
+                elif scelta == "n":
+                    pausa = True
+                    break
+                else:
+                    print("Errore, inserire una opzione valita (s / n)")
+                    
+            if pausa:
+                break 
         
         
 def rimuovi_pizza(ordini, prezzi, file):
-    cliente = input("Inserisci nome del cliente per anullare ordine: ")
+    while True:
+        cliente = input("Inserisci nome del cliente per anullare ordine: ")
     
-    if verifica_cliente(cliente, ordini):
-        cliente = cliente.title()
-        pizza = input("Inserisci ordine da anullare: ")
-        
-        if verifica_pizza(pizza, prezzi):
-            pizza = pizza.title()
-            ordini[cliente].remove(pizza)
+        if verifica_cliente(cliente, ordini):
+            cliente = cliente.title()
+            pizza = input("Inserisci ordine da anullare: ")
             
-            with open(file, 'w', encoding='utf-8') as f:
-                testo_nuovo = dict_a_testo(ordini)
-                f.write(testo_nuovo)
-            
+            if verifica_pizza(pizza, prezzi):
+                pizza = pizza.title()
+                if pizza in ordini[cliente]:
+                    ordini[cliente].remove(pizza)
+                
+                    with open(file, 'w', encoding='utf-8') as f:
+                        testo_nuovo = dict_a_testo(ordini)
+                        f.write(testo_nuovo)
+                
+                    break
+                
+                else:
+                    print("Ordine del cliente non trovata")
+                    while True:
+                        pausa = False
+                        
+                        scelta = input("Vuole riprovare? (S/n): ")
+                        scelta = scelta.lower()
+                        if scelta == "s":
+                            break
+                        elif scelta == "n":
+                            pausa = True
+                            break
+                        else:
+                            print("Errore, inserire una opzione valita (s / n)")
+                            
+                    if pausa:
+                        break 
+            else:
+                print("Ordine non trovata.")
+                while True:
+                    pausa = False
+                    
+                    scelta = input("Vuole riprovare? (S/n): ")
+                    scelta = scelta.lower()
+                    if scelta == "s":
+                        break
+                    elif scelta == "n":
+                        pausa = True
+                        break
+                    else:
+                        print("Errore, inserire una opzione valita (s / n)")
+                        
+                if pausa:
+                    break
+                
         else:
-            print("Ordine non trovata.")
-            
-    else:
-        print("Cliente non trovato.")
-        
+            print("Cliente non trovato.")
+            while True:
+                pausa = False
+                
+                scelta = input("Vuole riprovare? (S/n): ")
+                scelta = scelta.lower()
+                if scelta == "s":
+                    break
+                elif scelta == "n":
+                    pausa = True
+                    break
+                else:
+                    print("Errore, inserire una opzione valita (s / n)")
+                    
+            if pausa:
+                break
+
 
 def conto(ordini, prezzi):
-    cliente = input("Inserisci cliente: ")
+    while True:
+        cliente = input("Inserisci cliente: ")
     
-    if verifica_cliente(cliente, ordini):
-        cliente = cliente.title()
-        totale = 0
-        for elem in ordini[cliente]:
-            for pizza, prezzo in prezzi.items():
-                if elem == pizza:
-                    totale += prezzo
+        if verifica_cliente(cliente, ordini):
+            cliente = cliente.title()
+            totale = 0
+            for elem in ordini[cliente]:
+                for pizza, prezzo in prezzi.items():
+                    if elem == pizza:
+                        totale += prezzo
+                        
+            print(f"Il conto di {cliente} è di {totale:.2f}€")
+            
+            break
+            
+        else:
+            print("Cliente non trovato.")
+            while True:
+                pausa = False
+                
+                scelta = input("Vuole riprovare? (S/n): ")
+                scelta = scelta.lower()
+                if scelta == "s":
+                    break
+                elif scelta == "n":
+                    pausa = True
+                    break
+                else:
+                    print("Errore, inserire una opzione valita (s / n)")
                     
-        print(f"Il conto di {cliente} è di {totale:.2f}€")
-        
+            if pausa:
+                break
+
 
 def incasso(ordini, prezzi):
     incasso = 0
@@ -227,3 +376,70 @@ def incasso(ordini, prezzi):
     
     print(f"Incasso totale: {incasso:.2f}€")
     
+
+def pizze_ordinate(ordini):
+    list_pizze_ordinate = set()
+    
+    for pizze in ordini.values():
+        for pizza in pizze:
+            list_pizze_ordinate.add(pizza)
+        
+    return list_pizze_ordinate       
+        
+        
+def pizze_non_ordinate(ordini, prezzi):
+    non_ordinate = []
+    
+    list_pizze_ordinate = pizze_ordinate(ordini)
+    
+    for pizza in prezzi:
+        if pizza not in list(list_pizze_ordinate):
+            non_ordinate.append(pizza)
+    
+    cont = 0
+    if len(non_ordinate) > 0:
+        for elem in non_ordinate:
+            cont += 1
+            print(f"Pizze non ordinate:")
+            print(f"{cont}) {elem}")
+    else:
+        print("Tutte le pizze sono state ordinate.")
+        
+        
+def pizza_piu_ordinata(ordini):
+    pizze_uniche = pizze_ordinate(ordini)
+    tutte_pizze = []
+    
+    pizza = ""
+    pizza_piu = -1
+    
+    for pizze in ordini.values():
+        for pizza in pizze:
+            tutte_pizze.append(pizza)
+            
+    for elem in tutte_pizze:
+        conto = tutte_pizze.count(elem)
+        
+        if conto > pizza_piu:
+            pizza_piu = conto
+            pizza = elem
+    
+    print(f"La pizza {pizza}, ordinata {pizza_piu} volte.")
+
+
+def cliente_fisso(ordini, prezzo):
+    conto_max = 0
+    cliente_max = ""
+    
+    for cliente in ordini:
+        conto = 0
+        for pizza in prezzo:
+            for ordine in ordini[cliente]:
+                if ordine == pizza:
+                    conto += prezzo[pizza]
+        
+        if conto > conto_max:
+            conto_max = conto
+            cliente_max = cliente
+        
+    print(f"{cliente_max} ha spesso di piu con un totale di {conto_max:.2f}€") 
