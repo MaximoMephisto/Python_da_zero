@@ -188,6 +188,7 @@ def mostra_ordini_cliente(ordini):
             if pausa:
                 break     
         
+        
 def mostra_ordini_cliente_opt(ordini):
     cont = 0
     print("Sceglie il cliente")
@@ -227,6 +228,7 @@ def mostra_ordini_cliente_opt(ordini):
             print("Errore, caratteri sbagliati.")
             continue
         break
+          
           
 def nuovo_cliente(ordini, file):
     while True:
