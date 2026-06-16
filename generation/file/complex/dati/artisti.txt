@@ -1,0 +1,60 @@
+nome: Leonardo
+cognome: da Vinci
+data di nascita: 1452-04-15
+nome: Sandro
+cognome: Botticelli
+data di nascita: 1445-03-01
+nome: Niccolò
+cognome: Macchiavelli
+data di nascita: 1469-05-03
+nome: Michelangelo
+cognome: Buonarroti
+data di nascita: 1475-03-06
+nome: Raffaello
+cognome: Sanzio
+data di nascita: 1483-03-28
+nome: Donatello
+cognome: di Betto Bardi
+data di nascita: 1386-01-01
+nome: Tiziano
+cognome: Vecellio
+data di nascita: 1488-08-01
+nome: Michelangelo
+cognome: Merisi
+data di nascita: 1571-09-29
+nome: Giotto
+cognome: di Bondone
+data di nascita: 1267-01-01
+nome: Piero
+cognome: della Francesca
+data di nascita: 1415-09-01
+nome: Filippo
+cognome: Brunelleschi
+data di nascita: 1377-01-01
+nome: Masaccio
+cognome: Cassai
+data di nascita: 1401-12-21
+nome: Paolo
+cognome: Uccello
+data di nascita: 1397-06-15
+nome: Andrea
+cognome: del Verrocchio
+data di nascita: 1435-01-01
+nome: Giorgio
+cognome: da Castelfranco
+data di nascita: 1478-01-01
+nome: Jacopo
+cognome: Tintoretto
+data di nascita: 1518-09-29
+nome: Paolo
+cognome: Veronese
+data di nascita: 1528-01-01
+nome: Antonio
+cognome: da Correggio
+data di nascita: 1489-08-01
+nome: Andrea
+cognome: Mantegna
+data di nascita: 1431-01-01
+nome: Donato
+cognome: Bramante
+data di nascita: 1444-01-01
