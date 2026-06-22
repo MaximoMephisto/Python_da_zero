@@ -239,53 +239,71 @@ def piu_veloce(df):
 
 
 def doppio_conteggio(df):
-#     Obiettivo: calcolare i gol totali del Qatar in due modi e confrontarli: (a) sommando i goals dei suoi giocatori; 
-# (b) usando il punteggio di partita goals_team, ma una sola volta per partita (deduplicando su (match_id, team)). 
-# Ragionamento (chiave): goals_team è il risultato della squadra in quella partita ed è ripetuto su ogni riga-giocatore di quella partita. 
-# Sommarlo su tutte le righe lo moltiplica per il numero di giocatori! Per usarlo correttamente bisogna prima ridurre a una riga per partita.
+    
+    qatar_name = 'Qatar' 
+    
+    df_qatar_players = df[df['team'] == qatar_name]
+    gol_metodo_a = df_qatar_players['goals'].sum()
+    
+    df_partite_uniche = df.drop_duplicates(subset=['match_id', 'team'])
+    df_qatar_matches = df_partite_uniche[df_partite_uniche['team'] == qatar_name]
+    gol_metodo_b = df_qatar_matches['goals_team'].sum()
 
-# Atteso: i due metodi danno numeri diversi (per il Qatar ≈ 95 con il metodo (a) e ≈ 103 con il metodo (b)): differiscono per autogol, 
-# gol di giocatori non a referto, ecc. Capire perché è più importante del numero esatto.
-    pass
-doppio_conteggio(df)
+    print(gol_metodo_a)
+    print(gol_metodo_b)
+    print(gol_metodo_b - gol_metodo_a)
+    
+#doppio_conteggio(df)
 
 
 def disciplina(df):
-    # Obiettivo: cartellini yellow_cards e red_cards totali del torneo, e le 3 squadre con più gialli. Ragionamento: semplici somme per chiave; 
-    # utile come ulteriore esercizio di aggregazione.
+    
+    tot_yellow = df['yellow_cards'].sum()
+    print(f"Tot. Yellow: {tot_yellow}")
+    
+    tot_red = df['red_cards'].sum()
+    print(f"Tot. Red: {tot_red}")
+    
+    yellow = df.groupby('team')['yellow_cards'].sum().nlargest(3).reset_index()
+    
+    print("YELLOW cards")
+    for squadra, cards in yellow.values:
+        print(f"{squadra}, {cards}")
+    
+    
+    rosso = df.groupby('team')['red_cards'].sum().nlargest(3).reset_index()
+    
+    print("RED cards")
+    for squadra, cards in rosso.values:
+        print(f"{squadra}, {cards}")
 
-    # Atteso: gialli totali 5346, rossi totali 306; più gialli: Saudi Arabia 162, Qatar 160, Jamaica 154.
-    pass
-disciplina(df)
+#disciplina(df)
 
 
 def produrre_salvare(df):
-    # Es. 5.1 — Esportare la classifica marcatori (csv.writer)
-    # Obiettivo: salvare classifica_marcatori.csv con i top 20 cannonieri, colonne player_name,team,position,goals, ordinati per gol decrescenti. 
-    # Ragionamento: riusate l'aggregazione del 2.1, ordinate con sorted(..., key=..., reverse=True), prendete i primi 20 e scrivete con header.
-
-    # Atteso: 1 header + 20 righe; prima riga Memphis Zerrouki,Netherlands,Forward,24.
-    pass
-produrre_salvare(df)
+    classifica = df.groupby(['player_name', 'position', 'team'])['goals'].sum().nlargest(20)
+    
+    classifica.to_csv('generation/file/pandas/fifa/files/classifica_marcatori.csv', index=True, sep=';')
+    
+#produrre_salvare(df)
 
 
 def profilo_medio(df):
-    # Obiettivo: creare profilo_ruoli.csv con una riga per position e le medie (su tutte le righe del ruolo) di: goals, assists, tackles, pass_accuracy, 
-    # distance_covered_km. Arrotondate a 2 decimali. Ragionamento: aggregazione "somma e conteggio per chiave" poi divisione. È il classico identikit statistico: 
-    # cosa distingue un difensore da un attaccante nei numeri?
 
-    # Suggerimento: un dizionario {ruolo: {"somma_goals":.., "n":.., ...}} e alla fine dividete.
-    pass
-profilo_medio(df)
+    ruoli = df.groupby('position')[['goals', 'assists', 'tackles', 'pass_accuracy', 'distance_covered_km']].mean() # mean() calcola promedio di tutti gli elementi passati
+    
+    profilo = ruoli.round(2).reset_index()
+    
+    profilo.to_csv('generation/file/pandas/fifa/files/profilo_ruoli.csv', index=True, sep=';')
+
+#profilo_medio(df)
 
 
 def giocatore_del_torneo(df):
-#     Obiettivo: progettate voi un punteggio composito per nominare il miglior giocatore, poi salvate top_giocatori.csv con i primi 15 e il loro punteggio. 
-# Ragionamento (open-ended): dovete prendere decisioni e motivarle. Esempi di scelte:
-
-    # quali metriche combinare (gol, assist, key_passes, contrasti, recuperi...)?
-    # come renderle confrontabili (normalizzare? pesare gol più degli assist?);
-    # come gestire i ruoli (un portiere non va valutato come un attaccante)? Non esiste una risposta "giusta": l'esercizio è costruire e giustificare un criterio, 
-    # poi ordinare e salvare. Commentate nel notebook le scelte fatte.
-    pass
-giocatore_del_torneo(df)
+    migliori_giocatori = df.groupby('player_name')[['goals', 'assists', 'recoveries']].sum()
+    top = migliori_giocatori.reset_index()
+    
+    top_ord = top.sort_values(by='goals', ascending=False)
+    print(top_ord.head(15))
+    
+#giocatore_del_torneo(df)
