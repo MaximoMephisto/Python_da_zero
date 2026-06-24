@@ -61,11 +61,7 @@ Se vuoi testare e modificare il codice sul tuo computer, segui questi passaggi:
 
 1. **Clona il repository**:
    ```bash
-   git clone https://github.com
-   ```
-2. **Entra nella cartella del progetto**:
-   ```bash
-   cd Python_da_zero
+   git clone https://github.com/MaximoMephisto/Python_da_zero.git
    ```
 3. **Installa le dipendenze richieste** (necessario per l'esercizio con Pandas):
    ```bash
