@@ -76,6 +76,4 @@ Se vuoi testare e modificare il codice sul tuo computer, segui questi passaggi:
 
 ## 🔄 Aggiornamenti
 
-Questo repository viene aggiornato regolarmente al termine di ogni lezione con nuovi script, commenti approfonditi ed esercitazioni pratiche. 
-
-Se trovi utili questi esempi, lascia una ⭐ al progetto!
+Questo repository viene aggiornato regolarmente al termine di ogni lezione con nuovi script, commenti approfonditi ed esercitazioni pratiche.
