@@ -1,0 +1,58 @@
+Benvenuti al cinema generation.
+
+Vogliamo gestire i film presenti nelle varie sale
+
+SALE
+FILM
+
+Il gestionale che vogliamo creare, deve quindi permettere l'inserimento di film, la creazione di
+nuove sale
+l'assegnazione di un film in una sala
+
+-----------------------------------
+
+creare il database
+
+creare le due tabelle
+
+SALE
+id
+nome sala
+capienza
+formato_schermo
+film_id FK NULL
+
+FILM
+id
+nome_film
+
+genere
+durata
+
+------------------------------------
+
+Il db lo creiamo noi manualmente in mysql
+
+1) creare il primo script python (creazione_tabelle.py) che:
+
+a) si aggancia al db
+b) crea tabella film
+c) crea tabella sale
+
+(ancora meglio, se prima di crearle, cancellasse quella esistenti SE esistenti)
+
+2) il secondo è il gestionale vero e proprio, che avrà un menu del tipo
+
+Cosa vuoi fare?
+1) aggiungi film (se non esistente)
+2) aggiungere sala
+3) assegna film a sala (la sala non per forza ha un film assegnato)
+4) mostra tutti i film nel catalogo
+5) mostra tutte le sale registrate
+6) mostra panoramica (mostriamo in console tutte le sale presenti con i relativi film in quella
+sala)
+
+opzionali
+4) possibilità modificare dati di un film o rimuovere un film
+
+5) possibilità modificare dati di una sala o rimuovere una sala
