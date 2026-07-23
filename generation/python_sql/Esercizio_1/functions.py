@@ -1,7 +1,12 @@
 from connessione import conn_db
+import hashlib
 
 conn = conn_db()
 cursor = conn.cursor()
+
+def crittografa(passwd):
+    hash_stringa = hashlib.sha256(passwd.encode()).hexdigest()
+    return hash_stringa
 
 def dati_db(tabella):
     query = f"""
@@ -47,8 +52,7 @@ def aggiungi_film(nuovo_film):
         
         cursor.execute(query, (nuovo_film,))
         conn.commit()
-        print(f"Film {nuovo_film} inserito.")
-        
+        print(f"Film {nuovo_film} inserito.")     
 # aggiungi_film()
 
 
@@ -146,6 +150,7 @@ def assegna():
     else:
         print("Film non trovato.")
 #assegna()
+
 
 def mostra_film():
     print("------------")
@@ -333,8 +338,8 @@ def eliminiare_sala(sala):
     print(f"{sala} eliminata con successo.")
 
 
-def registrare_cliente(cliente):
-    dati = dati_db("clienti")
+def registrare_utente(utente):
+    dati = dati_db("utenti")
     
     clienti_esistenti = []
     sequenza = 1
@@ -342,8 +347,10 @@ def registrare_cliente(cliente):
     for elem in dati:
         clienti_esistenti.append(elem[3].lower())
     
-    while cliente[2].lower() in clienti_esistenti:
-        opt = input(f"{cliente[2]} è già stato registrato, vuoi riprovare? (S/n): ")
+    mail_controllo = utente[2].lower()
+    
+    while mail_controllo in clienti_esistenti:
+        opt = input(f"{utente[2]} è già stato registrato, vuoi riprovare? (S/n): ")
                 
         if opt.lower() == "s" or opt.lower() == "si":
             nome = input("Nome: ")
@@ -351,8 +358,10 @@ def registrare_cliente(cliente):
             mail = input("Mail: ")
             telefono = input("Telefono: ")
             password = input("Password: ")
+            admin = int(input("Admin: "))
             
-            cliente = (nome, cognome, mail, telefono, password)
+            utente = (nome, cognome, mail, telefono, password, admin)
+            mail_controllo = mail.lower()
                 
         else:
             print("Addio.")
@@ -360,10 +369,24 @@ def registrare_cliente(cliente):
             break
             
     if sequenza == 1:
+        utente_list = list(utente)
+        utente_list[4] = crittografa(utente_list[4])
+        utente = tuple(utente_list)
+        
         query = """
-            INSERT INTO clienti (nome, cognome, email, telefono, passwd)
-            VALUES (%s, %s, %s, %s, %s)
+            INSERT INTO utenti (nome, cognome, email, telefono, passwd, admin)
+            VALUES (%s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(query, cliente)
+        cursor.execute(query, utente)
         conn.commit()
-        print(f"Cliente {cliente[0]} registrato.")
+        print(f"utente {utente[0]} registrato.")
+
+# utente = (    
+#     'admin',
+#     'sdasd',
+#     'a@mail.com',
+#     '+567567',
+#     '123',
+#     1)
+
+# registrare_utente(utente)

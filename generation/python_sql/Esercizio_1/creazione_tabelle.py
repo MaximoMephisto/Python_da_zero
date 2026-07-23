@@ -6,7 +6,7 @@ cursor = conn.cursor()
 
 cursor.execute("DROP TABLE IF EXISTS sale")
 cursor.execute("DROP TABLE IF EXISTS film")
-cursor.execute("DROP TABLE IF EXISTS clienti")
+cursor.execute("DROP TABLE IF EXISTS utenti")
 
 # b) crea tabella film
 query = """
@@ -61,14 +61,15 @@ except:
     
 
 query_tre = """
-    CREATE TABLE clienti (
+    CREATE TABLE utenti (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         nome VARCHAR(100) NOT NULL,
         cognome VARCHAR(100) NOT NULL,
         email VARCHAR(150) UNIQUE NOT NULL,
         telefono VARCHAR(20),
         data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        passwd VARCHAR(30)
+        passwd VARCHAR(255) NOT NULL,
+        admin BOOLEAN
     )
 """
 try:
@@ -85,6 +86,16 @@ try:
 
 except:
     print("Errore al cercare di creare tabella.")
+
+
+# query_quattro = """
+#     CREATE TABLE prenotazioni (
+#         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+#         sala_id INT NOT NULL,
+#         film_id INT NOT NULL,
+        
+#     )
+# """
 
 cursor.close()
 conn.close()
