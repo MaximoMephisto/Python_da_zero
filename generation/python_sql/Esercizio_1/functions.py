@@ -19,19 +19,27 @@ def dati_db(tabella):
     return tabella_list
 
 
-def aggiungi_film():
+def aggiungi_film(nuovo_film):
     dati = dati_db("film")
+    sequenza = 1
 
-    sale_esistenti = []
+    film_esistenti = []
 
     for elem in dati:
-        sale_esistenti.append(elem[1])
+        film_esistenti.append(elem[1])
 
-    nuovo_film = input("Inserisci nome film: ")
-    if nuovo_film in sale_esistenti:
-        print("Film gia inserito.")
+    while nuovo_film in film_esistenti:
+        opt = input(f"{nuovo_film} è già stato inserito, vuoi riprovare? (S/n): ")
+        
+        if opt.lower() == "s" or opt.lower() == "si":
+            nuovo_film = input("Inserire film: ")
+            
+        else:
+            print("Addio.")
+            sequenza = 0
+            break
     
-    else:
+    if sequenza == 1:
         query = """
             INSERT INTO film (nome)
             VALUES (%s)
@@ -40,22 +48,31 @@ def aggiungi_film():
         cursor.execute(query, (nuovo_film,))
         conn.commit()
         print(f"Film {nuovo_film} inserito.")
+        
 # aggiungi_film()
 
 
-def aggiungi_sala():
+def aggiungi_sala(nuova_sala):
     dati = dati_db("sale")
     
+    sequenza = 1
     sale_esistenti = []
 
     for elem in dati:
         sale_esistenti.append(elem[1])
-
-    nuova_sala = input("Inserisci nome sala: ")
-    if nuova_sala in sale_esistenti:
-        print("Sala gia inserita.")
     
-    else:
+    while nuova_sala in sale_esistenti:
+        opt = input(f"{nuova_sala} è già stata inserita, vuoi riprovare? (S/n): ")
+               
+        if opt.lower() == "s" or opt.lower() == "si":
+            nuova_sala = input("Inserire sala: ")
+                
+        else:
+            print("Addio.")
+            sequenza = 0
+            break
+    
+    if sequenza == 1:
         capienza = int(input("Inserisci capacita di sala: "))
         
         formatto_valido = ["HD", "FULL HD", "4K"]
@@ -76,7 +93,6 @@ def aggiungi_sala():
 
 
 def assegna():
-    
     films = dati_db("film")
     
     print("Elenco films: ")
@@ -90,32 +106,264 @@ def assegna():
     id_film = None
     
     for film in films:
-        if selezione.lower() == film[1]:
+        if selezione.lower() == film[1].lower():
             id_film = film[0]
             break
     
     if id_film is not None:
-        
         sale = dati_db("sale")
             
+        print("-----")
         print("Elenco sale: ")
         cont = 0
         
         for sala in sale:
             cont += 1
-        print(f"{cont}) {sala}")
+            print(f"{cont}) {sala[1]}")
+
+        selezione_sala = input("Seleziona sala per nome: ")
         
+        id_sala = None
         
+        for sala in sale:
+            if selezione_sala.lower() == sala[1].lower():
+                id_sala = sala[0]
+                break
+        
+        if id_sala is not None:
+            query = f"""
+                UPDATE sale
+                SET film_id = {id_film}
+                WHERE id = {id_sala}
+            """
+            
+            cursor.execute(query)
+            conn.commit()
+            print("Relazione aggiunta con succeso.")
+        else:
+            print("Sala non trovata.")
     
-    
-    
-assegna()
+    else:
+        print("Film non trovato.")
+#assegna()
 
 def mostra_film():
-    pass
-
+    print("------------")
+    print("Elenco films")
+    print("------------") 
+    
+    films = dati_db("film")
+    cont = 0
+    
+    for film in films:
+        cont += 1
+        print(f"[{cont}] {film[1]}")
+  
+    
 def mostra_sale():
-    pass
+    print("------------")
+    print("Elenco sale")
+    print("------------") 
+    
+    sale = dati_db("sale")
+    cont = 0
+    
+    for sala in sale:
+        cont += 1
+        print(f"[{cont}] {sala[1]}")
+
 
 def panoramica():
-    pass
+    mostra_film()
+    mostra_sale()
+    print("------------") 
+    
+    query = """
+        SELECT 
+            s.nome AS Nome,
+            s.capienza AS Capienza,
+            s.formato_schermo AS Formatto,
+            f.nome AS Film
+        FROM sale AS s
+        LEFT JOIN film AS f ON f.id = s.film_id
+    """
+    cursor.execute(query)
+    panoramica = cursor.fetchall()
+    
+    for elem in panoramica:
+        print(f"""
+        Sala: {elem[0]}
+        Capienza: {elem[1]}
+        Qualità: {elem[2]}
+        Film: {elem[3] if elem[3] else "Senza film"}       
+        """)
+    
+
+def modificare_film(film):
+    dati = dati_db("film")
+
+    film_esistenti = []
+    id_film = None 
+    
+    for elem in dati:
+        film_esistenti.append(elem[1].lower())
+        
+    while film.lower() not in film_esistenti:
+        print("Errore, film non trovato.")
+        film = input("Seleziona film per nome: ")    
+        
+    for elem in dati:
+        if film.lower() == elem[1].lower():
+            id_film = elem[0]
+        
+    while film.lower() in film_esistenti:
+        
+        modifica = input("Nuovo nome del film: ")
+        
+        if modifica.lower() in film_esistenti:
+            print("Errore, film già inserito")
+            continue
+        else:  
+            query = f"""
+                UPDATE film
+                SET nome = "{modifica}"
+                where id = {id_film}
+            """
+            cursor.execute(query)
+            conn.commit()
+            print("Film modificato con succeso.")
+            break
+            
+
+def modificare_sala(sala):
+    dati = dati_db("sale")
+
+    sale_esistenti = []
+    id_sala = None 
+    
+    for elem in dati:
+        sale_esistenti.append(elem[1].lower())
+        
+    while sala.lower() not in sale_esistenti:
+        print("Errore, sala non trovata.")
+        sala = input("Seleziona sala per nome: ")    
+        
+    for elem in dati:
+        if sala.lower() == elem[1].lower():
+            id_sala = elem[0]
+        
+    while sala.lower() in sale_esistenti:
+        
+        modifica = input("Nuovo nome della sala: ")
+        
+        if modifica.lower() in sale_esistenti:
+            print("Errore, sala già inserita")
+            continue
+        else:  
+            capienza = int(input("Inserisci capacita di sala: "))        
+            formatto_valido = ["HD", "FULL HD", "4K"]
+            formatto = input("Inserire formatto (HD, FULL HD, 4K): ").upper()
+            if formatto not in formatto_valido:
+                print("Errore, sara impostato HD")
+                formatto = "HD"
+            
+            query = """
+                UPDATE sale
+                    SET 
+                    nome = %s, 
+                    capienza = %s, 
+                    formato_schermo = %s
+                WHERE id = %s
+            """
+            cursor.execute(query, (modifica, capienza, formatto, id_sala))
+            conn.commit()
+            print(f"Sala {modifica} inserita.")
+            break
+
+
+def eliminare_film(film):
+    dati = dati_db("film")
+
+    film_esistenti = []
+    id_film = None 
+    
+    for elem in dati:
+        film_esistenti.append(elem[1].lower())
+        
+    while film.lower() not in film_esistenti:
+        print("Errore, film non trovato.")
+        film = input("Seleziona film per nome: ")    
+        
+    for elem in dati:
+        if film.lower() == elem[1].lower():
+            id_film = elem[0]
+            
+    query = """
+        DELETE FROM film WHERE id = %s
+    """
+    
+    cursor.execute(query, (id_film,))
+    conn.commit()
+    print(f"{film} eliminato con successo.")
+    
+
+def eliminiare_sala(sala):
+    dati = dati_db("sale")
+
+    sale_esistenti = []
+    id_sala = None 
+    
+    for elem in dati:
+        sale_esistenti.append(elem[1].lower())
+        
+    while sala.lower() not in sale_esistenti:
+        print("Errore, sala non trovata.")
+        sala = input("Seleziona sala per nome: ")    
+        
+    for elem in dati:
+        if sala.lower() == elem[1].lower():
+            id_sala = elem[0]
+            
+    query = """
+        DELETE FROM sale WHERE id = %s
+    """
+    
+    cursor.execute(query, (id_sala,))
+    conn.commit()
+    print(f"{sala} eliminata con successo.")
+
+
+def registrare_cliente(cliente):
+    dati = dati_db("clienti")
+    
+    clienti_esistenti = []
+    sequenza = 1
+    
+    for elem in dati:
+        clienti_esistenti.append(elem[3].lower())
+    
+    while cliente[2].lower() in clienti_esistenti:
+        opt = input(f"{cliente[2]} è già stato registrato, vuoi riprovare? (S/n): ")
+                
+        if opt.lower() == "s" or opt.lower() == "si":
+            nome = input("Nome: ")
+            cognome = input("Cognome: ")
+            mail = input("Mail: ")
+            telefono = input("Telefono: ")
+            password = input("Password: ")
+            
+            cliente = (nome, cognome, mail, telefono, password)
+                
+        else:
+            print("Addio.")
+            sequenza = 0
+            break
+            
+    if sequenza == 1:
+        query = """
+            INSERT INTO clienti (nome, cognome, email, telefono, passwd)
+            VALUES (%s, %s, %s, %s, %s)
+        """
+        cursor.execute(query, cliente)
+        conn.commit()
+        print(f"Cliente {cliente[0]} registrato.")

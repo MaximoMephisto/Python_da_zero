@@ -6,6 +6,7 @@ cursor = conn.cursor()
 
 cursor.execute("DROP TABLE IF EXISTS sale")
 cursor.execute("DROP TABLE IF EXISTS film")
+cursor.execute("DROP TABLE IF EXISTS clienti")
 
 # b) crea tabella film
 query = """
@@ -58,6 +59,32 @@ try:
 except:
     print("Errore al cercare di creare tabella.")
     
+
+query_tre = """
+    CREATE TABLE clienti (
+        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+        nome VARCHAR(100) NOT NULL,
+        cognome VARCHAR(100) NOT NULL,
+        email VARCHAR(150) UNIQUE NOT NULL,
+        telefono VARCHAR(20),
+        data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        passwd VARCHAR(30)
+    )
+"""
+try:
+    cursor.execute(query_tre)
+    
+    verifica = """
+        SHOW TABLES
+    """
+
+    cursor.execute(verifica)
+    tabella = cursor.fetchall()
+    
+    print(f"Tabella creata: {tabella}")
+
+except:
+    print("Errore al cercare di creare tabella.")
 
 cursor.close()
 conn.close()
