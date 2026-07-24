@@ -1,4 +1,4 @@
-from functions import aggiungi_film, aggiungi_sala, assegna, mostra_film, mostra_sale, panoramica, modificare_film, modificare_sala, eliminare_film, eliminiare_sala, registrare_utente
+from functions import mostra_film, mostra_sale, panoramica
 
 def menu():
     while True:
@@ -8,6 +8,7 @@ def menu():
         print("1) Vedi i film")
         print("2) Vedi le sale")
         print("3) Panoramica")
+        print("4) Prenotare")
         print("0) Exit") 
         
         opt = input("Opzione: ")
@@ -27,6 +28,10 @@ def menu():
             elif opt == 3:
                 panoramica()
             
+            elif opt == 4:
+                #sale_per_prenotare()
+                #prenotare()
+                pass
                 
         else:
             print("Errore, il valore deve essere numerico.")

@@ -28,12 +28,8 @@ def login(mail, password):
         passwd = result[0]
         print(passwd)
         
-        pass_encode = crittografa(password)
         
-        print(pass_encode)
-        
-        
-        if pass_encode == passwd:
+        if bcrypt.checkpw(password.encode('utf-8'), passwd.encode('utf-8')):
             query = f"""
                 SELECT admin FROM utenti WHERE id = {id_utente}
             """

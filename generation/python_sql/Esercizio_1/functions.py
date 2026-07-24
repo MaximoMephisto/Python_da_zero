@@ -1,12 +1,13 @@
 from connessione import conn_db
-import hashlib
+import bcrypt
 
 conn = conn_db()
 cursor = conn.cursor()
 
 def crittografa(passwd):
-    hash_stringa = hashlib.sha256(passwd.encode()).hexdigest()
-    return hash_stringa
+    criptata = bcrypt.hashpw(passwd.encode('utf-8'), bcrypt.gensalt())
+    return criptata
+
 
 def dati_db(tabella):
     query = f"""
@@ -214,8 +215,10 @@ def modificare_film(film):
         film_esistenti.append(elem[1].lower())
         
     while film.lower() not in film_esistenti:
-        print("Errore, film non trovato.")
-        film = input("Seleziona film per nome: ")    
+        print("Errore, film non trovato. Inserisci 'exit' per uscire.")
+        film = input("Seleziona film per nome: ")   
+        if film == "exit":
+            break 
         
     for elem in dati:
         if film.lower() == elem[1].lower():
@@ -250,8 +253,10 @@ def modificare_sala(sala):
         sale_esistenti.append(elem[1].lower())
         
     while sala.lower() not in sale_esistenti:
-        print("Errore, sala non trovata.")
+        print("Errore, sala non trovata. Inserisci 'exit' per uscire")
         sala = input("Seleziona sala per nome: ")    
+        if sala == "exit":
+            break
         
     for elem in dati:
         if sala.lower() == elem[1].lower():
@@ -380,6 +385,25 @@ def registrare_utente(utente):
         cursor.execute(query, utente)
         conn.commit()
         print(f"utente {utente[0]} registrato.")
+
+
+def creare_presentazione():
+    pass
+    
+    
+# def sale_per_prenotare():
+#     query = """
+#         SELECT 
+#             s.nome AS Sala,
+#             f.nome AS Film,
+#             s.formatto_schermo AS Qualita
+#     """
+
+
+
+# def prenotare():
+#     pass
+
 
 # utente = (    
 #     'admin',

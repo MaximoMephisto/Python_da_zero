@@ -1,4 +1,5 @@
 from functions import aggiungi_film, aggiungi_sala, assegna, mostra_film, mostra_sale, panoramica, modificare_film, modificare_sala, eliminare_film, eliminiare_sala, registrare_utente, crittografa
+import time
 
 def menu_admin():
     while True:
@@ -15,7 +16,8 @@ def menu_admin():
         print("8) Modifica sala")
         print("9) Elimina film")
         print("10) Elimina sala")
-        print("11) Registrare cliente")
+        print("11) Registrare utente")
+        print("12) Creare presentazione")
         print("0) Exit") 
         
         opt = input("Opzione: ")
@@ -29,22 +31,28 @@ def menu_admin():
             elif opt == 1:
                 nuovo_film = input("Inserisci nome film: ")
                 aggiungi_film(nuovo_film) 
+                time.sleep(3.0)
                 
             elif opt == 2:
                 nuova_sala = input("Inserisci nome sala: ") 
                 aggiungi_sala(nuova_sala) 
+                time.sleep(3.0)
                 
             elif opt == 3:
                 assegna() 
+                time.sleep(3.0)
                 
             elif opt == 4:
                 mostra_film()
+                time.sleep(3.0)
                 
             elif opt == 5:
                 mostra_sale()
+                time.sleep(3.0)
             
             elif opt == 6:
                 panoramica()
+                time.sleep(3.0)
             
             elif opt == 7:
                 mostra_film()
@@ -52,6 +60,7 @@ def menu_admin():
                 film = input("Seleziona film per nome: ")
                 
                 modificare_film(film)
+                time.sleep(3.0)
             
             elif opt == 8:
                 mostra_sale()
@@ -59,6 +68,7 @@ def menu_admin():
                 sala = input("Seleziona sala per nome: ")
                 
                 modificare_sala(sala)
+                time.sleep(3.0)
             
             elif opt == 9:
                 mostra_film()
@@ -66,6 +76,7 @@ def menu_admin():
                 film = input("Seleziona film per nome: ")
                 
                 eliminare_film(film)
+                time.sleep(3.0)
             
             elif opt == 10:
                 mostra_sale()
@@ -73,6 +84,7 @@ def menu_admin():
                 sala = input("Seleziona sala per nome: ")
                 
                 eliminiare_sala(sala)
+                time.sleep(3.0)
                 
             elif opt == 11:
                 print("Registrare nuovo utente")
@@ -84,12 +96,29 @@ def menu_admin():
                 password = input("Password: ")
                 admin = int(input("Admin (1/0): "))
                 
-                password = crittografa(password)
-                
                 utente = (nome, cognome, mail, telefono, password, admin)
                 
                 registrare_utente(utente)
+                time.sleep(3.0)
+                
+            elif opt == 12:
+                print("Creare nuova presentazione")
+                
+                mostra_sale()
+                
+                sala = input("Seleziona sala per nome: ")
+                controllo_esistenza()
+                
+                mostra_film()
+                
+                film =input("Seleziona film per nome: ")
+                controllo_esistenza()
+                
+                giorno = ("Inserisci giorno della presentazione (anno/mese/giorno): ")
+                ora = ("Inserisci orario della presentazione (ora:minuti): ")
                 
         else:
             print("Errore, il valore deve essere numerico.")
+            time.sleep(3.0)
+            
             continue

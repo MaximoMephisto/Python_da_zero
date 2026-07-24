@@ -1,5 +1,6 @@
-from connessione import conn_db
+#from connessione import conn_db
 from functions import crittografa
+import bcrypt
 # conn = conn_db()
 # cursor = conn.cursor()
 
@@ -18,6 +19,11 @@ from functions import crittografa
 # result = cursor.fetchone()
 
 # print(result[0])
+passwd = "123"
 
-print(crittografa("123"))
-print(crittografa("123"))
+controllo = crittografa(passwd)
+
+if bcrypt.checkpw(passwd.encode('utf-8'), controllo):
+    print("Giusto")
+else:
+    print("va casa")
