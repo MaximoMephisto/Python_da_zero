@@ -387,6 +387,36 @@ def registrare_utente(utente):
         print(f"utente {utente[0]} registrato.")
 
 
+def controllo_esistenza(t_name, dato):
+    query = """
+        SELECT id FROM %s WHERE nome = %s
+    """
+    
+    
+    try:
+        cursor.execute(query, (t_name, dato))
+        dato_id = cursor.fetchone()
+
+        verifica = True
+    
+    except:
+        print("C'e stato un errore.")
+        
+    if verifica:
+        try:
+            query = """
+                INSERT INTO presentazioni(sala_id)
+                VALUES (%s)
+            """
+            
+            cursor.execute(query, (dato_id,))
+            conn.commit()
+            
+            print("Inserimento sala effetuato corretamente.")
+        
+        except:
+            print("Errore al cercare di inserire la sala.")
+
 def creare_presentazione():
     pass
     
