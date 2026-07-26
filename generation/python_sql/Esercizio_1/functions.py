@@ -1,4 +1,5 @@
 from connessione import conn_db
+from datetime import datetime
 import bcrypt
 
 conn = conn_db()
@@ -388,39 +389,66 @@ def registrare_utente(utente):
 
 
 def controllo_esistenza(t_name, dato):
-    query = """
-        SELECT id FROM %s WHERE nome = %s
+    query = f"""
+        SELECT id FROM {t_name} WHERE nome = %s
     """
     
-    
     try:
-        cursor.execute(query, (t_name, dato))
+        cursor.execute(query, (dato,))
         dato_id = cursor.fetchone()
 
-        verifica = True
+        #verifica = True
+        
+        return dato_id
     
     except:
         print("C'e stato un errore.")
+          
+    
+def creare_presentazione(t_1, t_2, sala_v, film_v, giorno, orario):
+    
+    giorno_pulito = giorno.strip()
+    ora_pulita = orario.strip()
         
-    if verifica:
-        try:
-            query = """
-                INSERT INTO presentazioni(sala_id)
-                VALUES (%s)
-            """
+    try:
+        giorno_verifica = datetime.strptime(giorno_pulito, "%Y/%m/%d")
+        ora_verifica = datetime.strptime(ora_pulita, "%H:%M").time()
+        
+        validazione = True
+        
+    except:
+        print("Errore, formatto data/giorno non valido.")
+        validazione = False
+
+    if validazione:
+        if sala_v is None:
+            print("Sala inserita non trovata.")
+        else:
+            id_sala = sala_v[0]
             
-            cursor.execute(query, (dato_id,))
+        if film_v is None:
+            print("Film inserito non trovato.")
+        else:
+            id_film = film_v[0]
+        
+        query = """
+            INSERT INTO presentazioni (sala_id, film_id, giorno, orario)
+            VALUES (%s, %s, %s, %s)
+        """
+        
+        try:
+            cursor.execute(query, (id_sala, id_film, giorno_verifica, ora_verifica))
             conn.commit()
             
-            print("Inserimento sala effetuato corretamente.")
+            print("Dati inseriti correttamente")
         
-        except:
-            print("Errore al cercare di inserire la sala.")
-
-def creare_presentazione():
-    pass
-    
-    
+        except Exception as e:
+            print(f"Errore al cercare di inserire dati. {e}")
+            conn.rollback()
+        
+    else:
+        print("Errore con i dati inseriti.")
+        
 # def sale_per_prenotare():
 #     query = """
 #         SELECT 

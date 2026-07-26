@@ -1,4 +1,4 @@
-from functions import aggiungi_film, aggiungi_sala, assegna, mostra_film, mostra_sale, panoramica, modificare_film, modificare_sala, eliminare_film, eliminiare_sala, registrare_utente, crittografa
+from functions import aggiungi_film, aggiungi_sala, assegna, mostra_film, mostra_sale, panoramica, modificare_film, modificare_sala, eliminare_film, eliminiare_sala, registrare_utente, controllo_esistenza, creare_presentazione, crittografa
 import time
 
 def menu_admin():
@@ -107,15 +107,17 @@ def menu_admin():
                 mostra_sale()
                 
                 sala = input("Seleziona sala per nome: ")
-                controllo_esistenza()
+                sala_v = controllo_esistenza("sale", sala)
                 
                 mostra_film()
                 
                 film =input("Seleziona film per nome: ")
-                controllo_esistenza()
+                film_v = controllo_esistenza("film", film)
                 
-                giorno = ("Inserisci giorno della presentazione (anno/mese/giorno): ")
-                ora = ("Inserisci orario della presentazione (ora:minuti): ")
+                giorno = input("Inserisci giorno della presentazione (anno/mese/giorno): ")
+                ora = input("Inserisci orario della presentazione (ora:minuti): ")
+                
+                creare_presentazione("sale", "film", sala_v, film_v, giorno, ora)
                 
         else:
             print("Errore, il valore deve essere numerico.")
