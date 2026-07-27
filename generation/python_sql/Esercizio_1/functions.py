@@ -55,7 +55,6 @@ def aggiungi_film(nuovo_film):
         cursor.execute(query, (nuovo_film,))
         conn.commit()
         print(f"Film {nuovo_film} inserito.")     
-# aggiungi_film()
 
 
 def aggiungi_sala(nuova_sala):
@@ -95,7 +94,6 @@ def aggiungi_sala(nuova_sala):
         cursor.execute(query, (nuova_sala, capienza, formatto))
         conn.commit()
         print(f"Sala {nuova_sala} inserita.")
-# aggiungi_sala()
 
 
 def assegna():
@@ -151,7 +149,6 @@ def assegna():
     
     else:
         print("Film non trovato.")
-#assegna()
 
 
 def mostra_film():
@@ -396,8 +393,6 @@ def controllo_esistenza(t_name, dato):
     try:
         cursor.execute(query, (dato,))
         dato_id = cursor.fetchone()
-
-        #verifica = True
         
         return dato_id
     
@@ -423,11 +418,13 @@ def creare_presentazione(t_1, t_2, sala_v, film_v, giorno, orario):
     if validazione:
         if sala_v is None:
             print("Sala inserita non trovata.")
+            id_sala = "Errore"
         else:
             id_sala = sala_v[0]
             
         if film_v is None:
             print("Film inserito non trovato.")
+            id_film = "Errore"
         else:
             id_film = film_v[0]
         
@@ -448,6 +445,7 @@ def creare_presentazione(t_1, t_2, sala_v, film_v, giorno, orario):
         
     else:
         print("Errore con i dati inseriti.")
+        
         
 # def sale_per_prenotare():
 #     query = """

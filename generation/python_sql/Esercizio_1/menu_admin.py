@@ -2,6 +2,7 @@ from functions import aggiungi_film, aggiungi_sala, assegna, mostra_film, mostra
 import time
 
 def menu_admin():
+    
     while True:
     
         print("Benvenuto al cinema. \n Scegli una opzione:")
@@ -24,11 +25,8 @@ def menu_admin():
         
         if opt.isnumeric():
             opt = int(opt)
-            
-            if opt == 0:
-                break
-            
-            elif opt == 1:
+
+            if opt == 1:
                 nuovo_film = input("Inserisci nome film: ")
                 aggiungi_film(nuovo_film) 
                 time.sleep(3.0)
@@ -119,6 +117,11 @@ def menu_admin():
                 
                 creare_presentazione("sale", "film", sala_v, film_v, giorno, ora)
                 
+            elif opt == 0:
+                verifica = False
+                print("Sessione chiusa.")
+                return verifica
+            
         else:
             print("Errore, il valore deve essere numerico.")
             time.sleep(3.0)

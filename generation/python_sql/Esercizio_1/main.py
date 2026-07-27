@@ -1,4 +1,3 @@
-from connessione import conn_db
 from login import login
 from menu_admin import menu_admin
 from menu_cliente import menu
@@ -23,14 +22,3 @@ def main():
         print("Non si puo accedere, credenziale non valide.")
 
 main()
-
-# bcrypt per cryptare le password
-
-# DELIMITER $$
-
-# CREATE PROCEDURE elenco_film()
-# BEGIN
-#     SELECT * FROM film;
-# END$$
-
-# DELIMITER ;

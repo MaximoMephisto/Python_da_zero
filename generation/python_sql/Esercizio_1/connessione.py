@@ -8,5 +8,5 @@ def conn_db():
         password = '1234',
         database = 'cinema'
     )
-    # print(conn)
+    
     return conn
