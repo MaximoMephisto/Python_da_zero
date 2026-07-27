@@ -1,8 +1,10 @@
-from functions import crittografa
 from connessione import conn_db
 import bcrypt
 
 def login(mail, password):
+    
+    mail = mail.lower()
+    
     conn = conn_db()
     cursor = conn.cursor()
     

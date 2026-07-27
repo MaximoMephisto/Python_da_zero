@@ -1,24 +1,18 @@
 from login import login
-from menu_admin import menu_admin
-from menu_cliente import menu
+from functions import selezione
 
 def main():
     
-    print("-----")
-    print("Login")
-    print("-----")
-    mail = input("Inserire mail: ")
-    passwd = input("Inserire password: ")
+    print("-----------------------------")
+    print("           Login             ")
+    print("-----------------------------")
     
-    mail = mail.lower()
-    passwd = passwd
+    mail = input("Email:")
+    passwd = input("Password:")
     
     verifica = login(mail, passwd)
-    if verifica is True:
-        menu_admin()
-    elif verifica is False:
-        menu()
-    else:
-        print("Non si puo accedere, credenziale non valide.")
+    
+    selezione(verifica)
+
 
 main()

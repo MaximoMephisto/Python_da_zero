@@ -1,5 +1,7 @@
 from connessione import conn_db
 from datetime import datetime
+from menu_admin import menu_admin
+from menu_cliente import menu
 import bcrypt
 
 conn = conn_db()
@@ -24,6 +26,17 @@ def dati_db(tabella):
         tabella_list.append(elem)
     
     return tabella_list
+
+
+def selezione(verifica):
+    if verifica is True:
+        visual = menu_admin()
+    elif verifica is False:
+        visual = menu()
+    else:
+        print("Non si puo accedere, credenziale non valide.")
+    
+    return visual
 
 
 def aggiungi_film(nuovo_film):
